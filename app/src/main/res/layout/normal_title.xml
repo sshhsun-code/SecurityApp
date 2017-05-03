@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/safepay_default_bg"
+    android:paddingTop="25dp"
+    android:paddingBottom="10dp"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_marginTop="12dp"
+        android:id="@+id/normal_title_icon"
+        android:layout_width="26dp"
+        android:layout_marginLeft="6dp"
+        android:layout_height="26dp"
+        android:src="@drawable/left_arrow"/>
+    <TextView
+        android:id="@+id/normal_title_text"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notificaion_manage"
+        android:textColor="#fff"
+        android:layout_marginLeft="6dp"
+        android:textSize="18sp"
+        android:layout_toRightOf="@id/normal_title_icon"/>
+    <ImageView
+        android:id="@+id/title_items"
+        android:layout_marginTop="11dp"
+        android:layout_width="25dp"
+        android:layout_marginLeft="6dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="6dp"
+        android:visibility="gone"
+        android:src="@drawable/title_item1"/>
+</RelativeLayout>
