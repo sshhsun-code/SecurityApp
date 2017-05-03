@@ -9,7 +9,7 @@ import java.util.HashSet;
 /**
  * Created by sshunsun on 2017/4/23.
  */
-public class SecurityApplication extends Application{
+public class SecurityApplication extends Application {
     private static SecurityApplication application;
     private static SharedPreferences  notify_read_sp;
     private static HashSet<String> showApps;

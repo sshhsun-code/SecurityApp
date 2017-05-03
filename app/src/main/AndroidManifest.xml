@@ -44,7 +44,15 @@
         <provider
             android:authorities="app.security.sunqi"
             android:permission="com.example.sunqi.securityking.getnotifyapp"
-            android:name=".dataprovider.MyContentProvider">
+            android:name=".dataprovider.MyContentProvider"
+            android:process=":backup">
+        </provider>
+
+        <provider
+            android:authorities="notify.security.sunqi"
+            android:permission="com.example.sunqi.securityking.getnotifydata"
+            android:name=".dataprovider.NotifyDataContentProvider"
+            android:process=":backup">
         </provider>
     </application>
 </manifest>

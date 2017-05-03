@@ -1,5 +1,6 @@
 package com.example.sunqi.securityking.dataprovider;
 
+import android.app.Notification;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,12 +9,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import com.example.sunqi.securityking.bean.NotifyAppInfo;
 import com.example.sunqi.securityking.global.Constant;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +28,8 @@ import java.util.List;
 public class NotifyDataProcessor {
     private static onDataListener dataListener;
     private static ArrayList<NotifyAppInfo> applist;
-    private static String URI = Constant.URI.NOTIFY_APP_URI;
+    private static String APP_URI = Constant.URI.NOTIFY_APP_URI;
+    private static String NOTIFY_URI = Constant.URI.NOTIFY_DATA_URI;
 
     public static void setDataListener(onDataListener listener) {
         dataListener = listener;
@@ -54,7 +60,7 @@ public class NotifyDataProcessor {
     }
 
     public static void addUnMonitoredApp(String packName, Context context) {
-        Uri uri = Uri.parse(URI);
+        Uri uri = Uri.parse(APP_URI);
         ContentResolver resolver = context.getContentResolver();
         ContentValues values = new ContentValues();
         values.put("packname", packName);
@@ -69,7 +75,7 @@ public class NotifyDataProcessor {
     }
 
     public static void removeUnMonitoredApp(String packName, Context context) {
-        Uri uri = Uri.parse(URI);
+        Uri uri = Uri.parse(APP_URI);
         ContentResolver resolver = context.getContentResolver();
         ContentValues values = new ContentValues();
         values.put("packname", packName);
@@ -78,7 +84,7 @@ public class NotifyDataProcessor {
     }
 
     public static ArrayList<String> getUnMonitoredApp(Context context) {
-        Uri uri = Uri.parse(URI);
+        Uri uri = Uri.parse(APP_URI);
         ArrayList<String> apps = new ArrayList<>();
         ContentResolver resolver = context.getContentResolver();
         Cursor cursor = resolver.query(uri,null,null,null,null);
@@ -87,6 +93,44 @@ public class NotifyDataProcessor {
             apps.add(cursor.getString(cursor.getColumnIndex("packname")));
         }
         return apps;
+    }
+
+    public static void addNotifyData(StatusBarNotification notification, Context context){
+        Uri uri = Uri.parse(NOTIFY_URI);
+        ContentResolver resolver = context.getContentResolver();
+        Bundle extras = notification.getNotification().extras;
+        ContentValues values = new ContentValues();
+        values.put("title", extras.getString(Notification.EXTRA_TITLE));
+        values.put("notify_id", notification.getId());
+        values.put("content", extras.getCharSequence(Notification.EXTRA_TEXT).toString());
+        values.put("when", extras.getLong(Notification.EXTRA_SHOW_WHEN));
+        values.put("icon", getImage((Bitmap) extras.getParcelable(Notification.EXTRA_SMALL_ICON)));
+        resolver.insert(uri,values);
+        resolver.notifyChange(uri,null);
+        Cursor cursor = resolver.query(uri,null,null,null,null);
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            Log.e("package",cursor.getString(cursor.getColumnIndex("packname")));
+        }
+        cursor.close();
+    }
+
+    public static void removeNotifyData(int notify_id, Context context) {
+        Uri uri = Uri.parse(NOTIFY_URI);
+        ContentResolver resolver = context.getContentResolver();
+        resolver.delete(uri,"notify_id = ?", new String[]{notify_id+""});
+    }
+
+    public static void removeAllNotify(Context context) {
+        Uri uri = Uri.parse(NOTIFY_URI);
+        ContentResolver resolver = context.getContentResolver();
+        resolver.delete(uri,null,null);
+    }
+
+    private static byte[] getImage(Bitmap bitmap) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+        return os.toByteArray();
     }
 
 

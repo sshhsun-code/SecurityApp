@@ -22,5 +22,6 @@ public class Constant {
 
     public static class URI{
         public static final String NOTIFY_APP_URI = "content://app.security.sunqi/app_notify";
+        public static final String NOTIFY_DATA_URI = "content://notify.security.sunqi/data_notify";
     }
 }

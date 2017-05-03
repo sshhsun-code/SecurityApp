@@ -23,7 +23,7 @@ public class NotifyInfoDataHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE app_notify_info (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, when LONG);");
+        db.execSQL("CREATE TABLE notify_info_data (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, notify_id INTEGER, content TEXT, when LONG, icon BLOB);");
     }
 
     @Override
