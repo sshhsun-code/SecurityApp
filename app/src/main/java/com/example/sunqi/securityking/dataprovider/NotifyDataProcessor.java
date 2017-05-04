@@ -95,6 +95,12 @@ public class NotifyDataProcessor {
         return apps;
     }
 
+
+    /**
+     * 向ContentProvider中添加数据
+     * @param notification
+     * @param context
+     */
     public static void addNotifyData(StatusBarNotification notification, Context context){
         Uri uri = Uri.parse(NOTIFY_URI);
         ContentResolver resolver = context.getContentResolver();
@@ -110,7 +116,7 @@ public class NotifyDataProcessor {
         Cursor cursor = resolver.query(uri,null,null,null,null);
         cursor.moveToFirst();
         while (cursor.moveToNext()) {
-            Log.e("package",cursor.getString(cursor.getColumnIndex("packname")));
+            Log.e("content",cursor.getString(cursor.getColumnIndex("content")));
         }
         cursor.close();
     }
@@ -121,7 +127,7 @@ public class NotifyDataProcessor {
         resolver.delete(uri,"notify_id = ?", new String[]{notify_id+""});
     }
 
-    public static void removeAllNotify(Context context) {
+    public static void removeAllNotifyData(Context context) {
         Uri uri = Uri.parse(NOTIFY_URI);
         ContentResolver resolver = context.getContentResolver();
         resolver.delete(uri,null,null);

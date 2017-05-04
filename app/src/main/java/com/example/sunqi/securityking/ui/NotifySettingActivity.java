@@ -179,7 +179,11 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
         if (NotifyServiceUtil.isEnable(this)) {
             toggleNotificationListenerService(this);
             Intent intent = new Intent(this, NotificationMoniter.class);
+            try {
             startService(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             showNotifyFunNotificaion();
         }
     }
