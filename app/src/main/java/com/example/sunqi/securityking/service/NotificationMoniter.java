@@ -1,9 +1,7 @@
 package com.example.sunqi.securityking.service;
 
-import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
-import android.os.Debug;
 import android.os.Handler;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -33,9 +31,10 @@ public class NotificationMoniter extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
+        handleNotificationPosted(sbn);
     }
 
-    private void handNotificationPosted(StatusBarNotification sbn) {
+    private void handleNotificationPosted(StatusBarNotification sbn) {
         NotifyDataProcessor.addNotifyData(sbn,getApplicationContext());
     }
 
