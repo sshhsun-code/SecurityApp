@@ -10,12 +10,14 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import com.example.sunqi.securityking.bean.NotifyAppInfo;
+import com.example.sunqi.securityking.bean.NotifyData;
 import com.example.sunqi.securityking.global.Constant;
 
 import java.io.ByteArrayOutputStream;
@@ -121,6 +123,35 @@ public class NotifyDataProcessor {
         cursor.close();
     }
 
+    public static ArrayList<NotifyData> getAllNotifyData(Context context){
+        ArrayList<NotifyData> datalist = new ArrayList<>();
+        Uri uri = Uri.parse(NOTIFY_URI);
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(uri,null,null,null,null);
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            NotifyData data = new NotifyData();
+            data.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+            data.setNotify_id(cursor.getInt(cursor.getColumnIndex("notify_id")));
+            data.setContent(cursor.getString(cursor.getColumnIndex("content")));
+            data.setLONG(cursor.getLong(cursor.getColumnIndex("when")));
+            data.setIcon(getBitmapFromDB(cursor.getBlob(cursor.getColumnIndex("icon"))));
+        }
+        cursor.close();
+        return datalist;
+    }
+
+    private static Bitmap getBitmapFromDB(byte[] iconData) {
+        if (iconData == null) {
+            return null;
+        }
+        Bitmap bmp = BitmapFactory.decodeByteArray(iconData, 0, iconData.length);
+        if (bmp == null) {
+            return null;
+        }
+        return bmp;
+    }
+
     public static void removeNotifyData(int notify_id, Context context) {
         Uri uri = Uri.parse(NOTIFY_URI);
         ContentResolver resolver = context.getContentResolver();
@@ -134,6 +165,9 @@ public class NotifyDataProcessor {
     }
 
     private static byte[] getImage(Bitmap bitmap) {
+        if(bitmap == null) {
+            return null;
+        }
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
         return os.toByteArray();

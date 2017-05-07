@@ -7,7 +7,7 @@
     <include layout="@layout/normal_title"/>
 
     <ExpandableListView
-        android:id="@+id/app_list"
+        android:id="@+id/notify_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
