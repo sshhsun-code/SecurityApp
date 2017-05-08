@@ -112,7 +112,7 @@ public class NotifyDataProcessor {
         values.put("notify_id", notification.getId());
         values.put("content", extras.getCharSequence(Notification.EXTRA_TEXT).toString());
         values.put("when", extras.getLong(Notification.EXTRA_SHOW_WHEN));
-        values.put("icon", getImage((Bitmap) extras.getParcelable(Notification.EXTRA_SMALL_ICON)));
+        values.put("icon", getImageBuff((Bitmap) extras.getParcelable(Notification.EXTRA_SMALL_ICON)));
         resolver.insert(uri,values);
         resolver.notifyChange(uri,null);
         Cursor cursor = resolver.query(uri,null,null,null,null);
@@ -164,7 +164,7 @@ public class NotifyDataProcessor {
         resolver.delete(uri,null,null);
     }
 
-    private static byte[] getImage(Bitmap bitmap) {
+    private static byte[] getImageBuff(Bitmap bitmap) {
         if(bitmap == null) {
             return null;
         }
