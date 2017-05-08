@@ -4,4 +4,7 @@
     <string name="normal_functions">常规功能</string>
     <string name="applock">应用锁</string>
     <string name="notificaion_manage">防通知打扰</string>
+    <string name="notify_title">通知标题</string>
+    <string name="notify_content">通知内容1234567890</string>
+    <string name="notify_when">2017年5月8号</string>
 </resources>

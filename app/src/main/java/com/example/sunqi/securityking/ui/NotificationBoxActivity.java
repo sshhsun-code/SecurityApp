@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -109,21 +110,24 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
         }
         @Override
         public int getCount() {
-            return 0;
+            return appList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return appList.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            if(convertView == null) {
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.notify_data_item,null);
+            }
             return null;
         }
     }

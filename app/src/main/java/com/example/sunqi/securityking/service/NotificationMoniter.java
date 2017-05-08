@@ -65,11 +65,22 @@ public class NotificationMoniter extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
+        for (NotificationListener listener : mListeners) {
+            if (listener != null) {
+                listener.onNotificationPosted(this, sbn);
+            }
+        }
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         super.onNotificationRemoved(sbn);
+        for (NotificationListener listener : mListeners) {
+            if (listener != null) {
+                listener.onNotificationRemoved(this, sbn);
+            }
+        }
+
     }
 
     @Override
@@ -80,9 +91,8 @@ public class NotificationMoniter extends NotificationListenerService {
             }
         }
         mListeners.clear();
-        super.onDestroy();
-        super.onDestroy();
         getContentResolver().unregisterContentObserver(appObserver);
+        super.onDestroy();
     }
 
     public void cancelNotification(StatusBarNotification notification) {
