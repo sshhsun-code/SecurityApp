@@ -21,6 +21,7 @@ public class NotificationMoniter extends NotificationListenerService {
     private static ArrayList<Class<? extends NotificationListener>> sListenerClass = new ArrayList<>();
     AppObserver appObserver;
     private static ArrayList<String> whiteNameApps;
+    public static NotificationMoniter mInstance;
 
     private String uriStr = Constant.URI.NOTIFY_APP_URI;
 
@@ -34,6 +35,7 @@ public class NotificationMoniter extends NotificationListenerService {
     @Override
     public void onCreate() {
         super.onCreate();
+        mInstance = NotificationMoniter.this;
         for (int i = 0; i < sListenerClass.size(); i++) {
             Class<? extends NotificationListener> cls = sListenerClass.get(i);
             NotificationListener instance;
@@ -85,6 +87,7 @@ public class NotificationMoniter extends NotificationListenerService {
 
     @Override
     public void onDestroy() {
+        mInstance = null;
         for (NotificationListener listener : mListeners) {
             if (listener != null) {
                 listener.onDestroy(this);
