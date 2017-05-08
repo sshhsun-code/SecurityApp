@@ -20,6 +20,7 @@ public class SecurityApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        application = SecurityApplication.this;
         initApplication();
     }
 

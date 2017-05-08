@@ -112,15 +112,10 @@ public class NotifyDataProcessor {
         values.put("notify_id", notification.getId());
         values.put("content", extras.getCharSequence(Notification.EXTRA_TEXT).toString());
         values.put("when", extras.getLong(Notification.EXTRA_SHOW_WHEN));
-        values.put("icon", getImageBuff((Bitmap) extras.getParcelable(Notification.EXTRA_SMALL_ICON)));
+        values.put("icon", getImageBuff((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON)));
+        values.put("packname", notification.getPackageName());
         resolver.insert(uri,values);
         resolver.notifyChange(uri,null);
-        Cursor cursor = resolver.query(uri,null,null,null,null);
-        cursor.moveToFirst();
-        while (cursor.moveToNext()) {
-            Log.e("content",cursor.getString(cursor.getColumnIndex("content")));
-        }
-        cursor.close();
     }
 
     public static ArrayList<NotifyData> getAllNotifyData(Context context){
@@ -136,6 +131,7 @@ public class NotifyDataProcessor {
             data.setContent(cursor.getString(cursor.getColumnIndex("content")));
             data.setLONG(cursor.getLong(cursor.getColumnIndex("when")));
             data.setIcon(getBitmapFromDB(cursor.getBlob(cursor.getColumnIndex("icon"))));
+            data.setPkgName(cursor.getString(cursor.getColumnIndex("packname")));
         }
         cursor.close();
         return datalist;

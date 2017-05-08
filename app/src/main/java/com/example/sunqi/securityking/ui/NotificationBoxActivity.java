@@ -1,7 +1,9 @@
 package com.example.sunqi.securityking.ui;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Color;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -20,6 +23,7 @@ import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.bean.NotifyData;
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.Constant;
+import com.example.sunqi.securityking.utils.Commons;
 
 import java.util.ArrayList;
 
@@ -52,6 +56,49 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
         mNotifyListView = (ListView) findViewById(R.id.notify_list);
         mAdapter = new NotifyAdapter(datalist ,mcontext);
         mNotifyListView.setAdapter(mAdapter);
+        mNotifyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NotifyData data = datalist.get(position);
+                handleIntent(data);
+                datalist.remove(position);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void handleIntent(NotifyData data) {
+        PendingIntent pi = data.getPendingIntent();
+        try {
+            if (pi != null) {
+                pi.send();
+            } else {
+                tryAllWithIntent(mcontext, data.getPkgName());
+            }
+        } catch (PendingIntent.CanceledException exception) {
+            exception.printStackTrace();
+            tryAllWithIntent(mcontext, data.getPkgName());
+        }
+
+
+    }
+
+    private void tryAllWithIntent(Context context, String pkgName) {
+        sendIntentByPackageName(pkgName, context);
+    }
+
+    private void sendIntentByPackageName(String packageName, Context context){
+        try {
+            if (packageName != null) {
+                Intent intent = Commons.getAppIntentWithPackageName(context, packageName);
+                if (intent != null) {
+                    Commons.startActivity(context, intent);
+                    // 如果这里也打开失败，那么就无解了
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initData() {
