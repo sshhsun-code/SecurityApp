@@ -3,8 +3,8 @@ package com.example.sunqi.securityking.service;
 import android.content.Intent;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.example.sunqi.securityking.bean.NotifyData;
 import com.example.sunqi.securityking.utils.RedpacketAppsManager;
 
 /**
@@ -48,24 +48,11 @@ public class RedPacketNotificationListener extends NotificationListener {
             }
 
             String pkgName = notification.getPackageName();
+            NotifyData data = new NotifyData(notification);
+            data.setPkgName(pkgName);
+            RedPacketBackgroundService.get().sendRedPakcetRecvMsg(data);
 
-            Log.e("RedPacketListener", "tryPostRedPacketMsg: parser notification begin " + pkgName);
-
-//            NotificationParsedHelper notificationParsedHelper = new NotificationParsedHelper(sbn);
-//            ExpandDetailInfo detailInfo = notificationParsedHelper.getTextNotificationInfo();
-//            detailInfo.setPackageName(pkgName);
-
-
-            Log.e("RedPacketListener", "tryPostRedPacketMsg: parser notification end" + pkgName);
-
-
-//            RedPacketBackgroundService.get().sendRedPakcetRecvMsg(detailInfo);
-
-
-            Log.e("RedPacketListener", "tryPostRedPacketMsg: sendRedPakcetRecvMsg end" + pkgName);
-
-
-        }catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }

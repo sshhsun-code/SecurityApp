@@ -1,7 +1,10 @@
 package com.example.sunqi.securityking.bean;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 
 /**
  * Created by sshunsun on 2017/5/8.
@@ -11,12 +14,23 @@ public class NotifyData {
     private String title;
     private int notify_id;
     private String content;
-    private long LONG;
+    private long when;
     private Bitmap icon;
     private PendingIntent pendingIntent;
 
     public NotifyData() {
 
+    }
+
+    public NotifyData(StatusBarNotification notification) {
+        this.pkgName = notification.getPackageName();
+        Bundle bundle = notification.getNotification().extras;
+        this.title = bundle.getString(Notification.EXTRA_TITLE);
+        this.content = bundle.getString(Notification.EXTRA_TEXT);
+        this.when = bundle.getLong(Notification.EXTRA_SHOW_WHEN);
+        this.icon = bundle.getParcelable(Notification.EXTRA_LARGE_ICON);
+        this.notify_id = notification.getId();
+        this.pendingIntent = notification.getNotification().contentIntent;
     }
 
     public String getPkgName() {
@@ -51,12 +65,12 @@ public class NotifyData {
         this.content = content;
     }
 
-    public long getLONG() {
-        return LONG;
+    public long getWhen() {
+        return when;
     }
 
-    public void setLONG(long LONG) {
-        this.LONG = LONG;
+    public void setWhen(long when) {
+        this.when = when;
     }
 
     public Bitmap getIcon() {

@@ -129,7 +129,7 @@ public class NotifyDataProcessor {
             data.setTitle(cursor.getString(cursor.getColumnIndex("title")));
             data.setNotify_id(cursor.getInt(cursor.getColumnIndex("notify_id")));
             data.setContent(cursor.getString(cursor.getColumnIndex("content")));
-            data.setLONG(cursor.getLong(cursor.getColumnIndex("when")));
+            data.setWhen(cursor.getLong(cursor.getColumnIndex("when")));
             data.setIcon(getBitmapFromDB(cursor.getBlob(cursor.getColumnIndex("icon"))));
             data.setPkgName(cursor.getString(cursor.getColumnIndex("packname")));
         }

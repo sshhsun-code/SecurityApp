@@ -54,11 +54,7 @@ public class RedPacketInterceptor {
 
         handlePlayTips();
 
-        boolean isRemindMsgOnly = true;
-
-
         if (tryOpenRedpacketPage(notifyData)) {
-            isRemindMsgOnly = false;
 
         }
         else
