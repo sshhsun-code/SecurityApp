@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sunqi.securityking.R;
+import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.bean.NotifyAppInfo;
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.Constant;
@@ -44,6 +45,8 @@ import java.util.ArrayList;
  */
 public class RedpacketSettingActivity extends Activity implements View.OnClickListener {
 
+    public static final String BROADCAST_ACTION_REFRESH_REDPACKET_SETTING_UI = "broadcast_action_refresh_redpacket_setting_ui";
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -52,5 +55,10 @@ public class RedpacketSettingActivity extends Activity implements View.OnClickLi
     @Override
     public void onClick(View view) {
 
+    }
+
+    public static void sendRefreshBroadcast() {
+        SecurityApplication.getInstance().sendBroadcast(new Intent(
+                RedpacketSettingActivity.BROADCAST_ACTION_REFRESH_REDPACKET_SETTING_UI));
     }
 }
