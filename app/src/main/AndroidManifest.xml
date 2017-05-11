@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sunqi.securityking">
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+
     <application
         android:name=".SecurityApplication"
         android:allowBackup="true"
@@ -33,6 +35,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.KeepForegroundActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:process=":backup"
+            android:screenOrientation="portrait"/>
+
         <service android:name=".service.NotificationMoniter"
             android:process=":backup"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
@@ -44,13 +54,15 @@
         <provider
             android:authorities="app.security.sunqi"
             android:permission="com.example.sunqi.securityking.getnotifyapp"
-            android:name=".dataprovider.MyContentProvider">
+            android:name=".dataprovider.MyContentProvider"
+            android:process=":backup">
         </provider>
 
         <provider
             android:authorities="notify.security.sunqi"
             android:permission="com.example.sunqi.securityking.getnotifydata"
-            android:name=".dataprovider.NotifyDataContentProvider">
+            android:name=".dataprovider.NotifyDataContentProvider"
+            android:process=":backup">
         </provider>
     </application>
 </manifest>

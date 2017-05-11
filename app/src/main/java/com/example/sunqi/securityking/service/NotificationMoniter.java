@@ -1,5 +1,7 @@
 package com.example.sunqi.securityking.service;
 
+import android.app.Service;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Build;
@@ -10,6 +12,7 @@ import android.util.Log;
 
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.Constant;
+import com.example.sunqi.securityking.ui.KeepForegroundActivity;
 
 import java.util.ArrayList;
 
@@ -62,6 +65,18 @@ public class NotificationMoniter extends NotificationListenerService {
         whiteNameApps = NotifyDataProcessor.getUnMonitoredApp(getApplicationContext());
         appObserver = new AppObserver();
         whiteNameApps = new ArrayList<>();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return Service.START_STICKY;
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Intent intent = new Intent(this, KeepForegroundActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

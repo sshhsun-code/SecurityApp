@@ -1,5 +1,6 @@
 package com.example.sunqi.securityking.service;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
@@ -59,6 +60,11 @@ public class RedPacketNotificationListener extends NotificationListener {
     }
 
 
+    /**
+     * 过滤收到的通知，只有是红包的时候才执行后续操作
+     * @param sbn
+     * @return
+     */
     private boolean filterPackage(StatusBarNotification sbn)
     {
         String pkgName = sbn.getPackageName();
@@ -67,6 +73,13 @@ public class RedPacketNotificationListener extends NotificationListener {
         }
 
         if(!RedpacketAppsManager.isRedpacketApp(pkgName))
+        {
+            return true;
+        }
+
+        String content = sbn.getNotification().extras.getString(Notification.EXTRA_TEXT);
+
+        if(!RedpacketAppsManager.isRedpacketNotification(content))
         {
             return true;
         }
