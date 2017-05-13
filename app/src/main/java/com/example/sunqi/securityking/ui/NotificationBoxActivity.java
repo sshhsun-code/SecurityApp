@@ -17,13 +17,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.bean.NotifyData;
-import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
+import com.example.sunqi.securityking.dataprovider.NotificationInfoProcessor;
 import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.utils.Commons;
+import com.example.sunqi.securityking.utils.TimeUtils;
 
 import java.util.ArrayList;
 
@@ -31,7 +34,7 @@ import java.util.ArrayList;
  * 通知栏信息拦截Activity
  * Created by sshunsun on 2017/4/30.
  */
-public class NotificationBoxActivity extends Activity implements View.OnClickListener{
+public class NotificationBoxActivity extends Activity implements View.OnClickListener , NotificationInfoProcessor.onDataListener{
 
     private static Context mcontext;
     private static ArrayList<NotifyData> datalist;
@@ -54,17 +57,33 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
 
     private void initView() {
         mNotifyListView = (ListView) findViewById(R.id.notify_list);
-        mAdapter = new NotifyAdapter(datalist ,mcontext);
-        mNotifyListView.setAdapter(mAdapter);
+        if (!datalist.isEmpty()) {
+            mAdapter = new NotifyAdapter(datalist ,mcontext);
+            mNotifyListView.setAdapter(mAdapter);
+        }
         mNotifyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NotifyData data = datalist.get(position);
-                handleIntent(data);
+                NotificationInfoProcessor.removeNotifyData(data); //从数据库中删除
                 datalist.remove(position);
                 mAdapter.notifyDataSetChanged();
+                handleIntent(data);
             }
         });
+    }
+
+    @Override
+    public void onDataFinished(ArrayList<NotifyData> Datalist) {
+        datalist = Datalist;
+        mAdapter = new NotifyAdapter(datalist ,mcontext);
+        mNotifyListView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDataNone() {
+
     }
 
     private void handleIntent(NotifyData data) {
@@ -79,8 +98,6 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
             exception.printStackTrace();
             tryAllWithIntent(mcontext, data.getPkgName());
         }
-
-
     }
 
     private void tryAllWithIntent(Context context, String pkgName) {
@@ -105,8 +122,9 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
         mcontext = this;
         datalist = new ArrayList<>();
         Uri uri = Uri.parse(uriStr);
-        getContentResolver().registerContentObserver(uri, true, norifyDataObserver);
+        NotificationInfoProcessor.setDataListener(this);
         norifyDataObserver = new NorifyDataObserver();
+        getContentResolver().registerContentObserver(uri, true, norifyDataObserver);
     }
 
     private void iniTitle() {
@@ -116,6 +134,12 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NotificationInfoProcessor.requsetNotifyData(); //请求拦截到的通知消息
     }
 
     private void setStatusBarTranslate() {
@@ -130,10 +154,6 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
         }
     }
 
-    private static void refreshData() {
-        datalist = NotifyDataProcessor.getAllNotifyData(mcontext);
-    }
-
     static class NorifyDataObserver extends ContentObserver {
         public NorifyDataObserver() {
             super(new Handler());
@@ -142,7 +162,6 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            refreshData();
         }
     }
 
@@ -172,11 +191,34 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            NotifyData data = datalist.get(position);
             if(convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.notify_data_item,null);
             }
-            return null;
+            ViewHolder viewHolder = new ViewHolder(convertView);
+            if (data.getIcon() != null) {
+                viewHolder.icon.setImageBitmap(data.getIcon());
+            }
+            viewHolder.title.setText(data.getTitle());
+            viewHolder.content.setText(data.getContent());
+            viewHolder.time.setText(TimeUtils.getTimeStr(data.getWhen()));
+            return convertView;
+        }
+
+        private class ViewHolder {
+            public ImageView icon;
+            public TextView title;
+            public TextView content;
+            public TextView time;
+
+            public ViewHolder(View convertView) {
+                icon = (ImageView) convertView.findViewById(R.id.notify_icon);
+                title = (TextView) convertView.findViewById(R.id.notify_title);
+                content = (TextView) convertView.findViewById(R.id.notify_content);
+                time = (TextView) convertView.findViewById(R.id.notify_when);
+            }
         }
     }
+
 
 }

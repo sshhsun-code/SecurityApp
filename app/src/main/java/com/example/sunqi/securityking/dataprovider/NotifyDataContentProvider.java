@@ -33,7 +33,7 @@ public class NotifyDataContentProvider extends ContentProvider {
         Cursor cursor = null;
         if (code == DATA_NOTIFY_INFO) {
             cursor = helper.getReadableDatabase().query("notify_info_data",
-                    new String[]{"_id","title","notify_id","content","when","icon","packname"},
+                    new String[]{"_id","title","notify_id","content","time","icon","packname"},
             selection,selectionArgs,null,null,sortOrder);
         }
         return cursor;

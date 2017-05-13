@@ -10,7 +10,6 @@ public class Constant {
     }
 
     public static class State{
-        public static final int NOTIFY_CANCEL = 0; //禁止通知
         public static final int NOTIFY_MANAGE = 0; //收起通知
         public static final int NOTIFY_SHOW = 2;   //显示通知
     }

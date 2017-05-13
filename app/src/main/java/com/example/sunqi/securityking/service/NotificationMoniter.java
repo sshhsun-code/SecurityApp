@@ -1,5 +1,7 @@
 package com.example.sunqi.securityking.service;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.database.ContentObserver;
@@ -8,11 +10,14 @@ import android.os.Build;
 import android.os.Handler;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.ui.KeepForegroundActivity;
+import com.example.sunqi.securityking.ui.NotificationBoxActivity;
 
 import java.util.ArrayList;
 
@@ -23,7 +28,7 @@ public class NotificationMoniter extends NotificationListenerService {
 
     private static ArrayList<Class<? extends NotificationListener>> sListenerClass = new ArrayList<>();
     AppObserver appObserver;
-    private static ArrayList<String> whiteNameApps;
+    private static ArrayList<String> whiteNameApps = new ArrayList<>();
     public static NotificationMoniter mInstance;
 
     private String uriStr = Constant.URI.NOTIFY_APP_URI;
@@ -53,7 +58,7 @@ public class NotificationMoniter extends NotificationListenerService {
         }
         initData();
         initListener();
-
+        showNotifyFunNotificaion();
     }
 
     private void initListener() {
@@ -102,6 +107,7 @@ public class NotificationMoniter extends NotificationListenerService {
 
     @Override
     public void onDestroy() {
+        stopForeground(false);
         mInstance = null;
         for (NotificationListener listener : mListeners) {
             if (listener != null) {
@@ -131,6 +137,21 @@ public class NotificationMoniter extends NotificationListenerService {
 
     private void refreshWhiteName() {
         whiteNameApps = NotifyDataProcessor.getUnMonitoredApp(getApplicationContext());
+    }
+
+    private void showNotifyFunNotificaion() {
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, NotificationBoxActivity.class), 0);
+        NotificationManager manager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder ncBuilder = new NotificationCompat.Builder(this);
+        ncBuilder.setContentTitle("My Notification");
+        ncBuilder.setContentText("Notification Listener Service Example");
+        ncBuilder.setTicker("Notification Listener Service Example");
+        ncBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        ncBuilder.setAutoCancel(false);
+        ncBuilder.setContentIntent(pendingIntent);
+        ncBuilder.setPriority(100);
+        ncBuilder.setOngoing(true);
+        startForeground((int) System.currentTimeMillis(), ncBuilder.build());
     }
 
 

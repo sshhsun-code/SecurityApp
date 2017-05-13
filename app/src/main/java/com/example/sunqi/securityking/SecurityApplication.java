@@ -1,7 +1,6 @@
 package com.example.sunqi.securityking;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.HashSet;
@@ -34,11 +33,6 @@ public class SecurityApplication extends Application {
         }
 
         return application;
-    }
-
-    public static Context getAppContext() {
-        application = getInstance();
-        return application.getApplicationContext();
     }
 
 }

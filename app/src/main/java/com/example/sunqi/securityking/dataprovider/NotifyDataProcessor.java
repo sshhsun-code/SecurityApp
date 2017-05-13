@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
@@ -16,6 +15,7 @@ import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.bean.NotifyAppInfo;
 import com.example.sunqi.securityking.bean.NotifyData;
 import com.example.sunqi.securityking.global.Constant;
@@ -29,36 +29,50 @@ import java.util.List;
  */
 public class NotifyDataProcessor {
     private static onDataListener dataListener;
-    private static ArrayList<NotifyAppInfo> applist;
+    private static ArrayList<NotifyAppInfo> applist = new ArrayList<>();
+    private static ArrayList<String> whiteAppList = new ArrayList<>();
     private static String APP_URI = Constant.URI.NOTIFY_APP_URI;
     private static String NOTIFY_URI = Constant.URI.NOTIFY_DATA_URI;
+    private static Context mconext = SecurityApplication.getInstance();
 
     public static void setDataListener(onDataListener listener) {
         dataListener = listener;
     }
 
     public static void getNotifyAppSettingData(Context context) {
-        applist = new ArrayList<>();
+        ArrayList<NotifyAppInfo> whiteList = new ArrayList<>();
+        initWhiteList(context);
+        applist.clear();
         NotifyAppInfo appInfo;
         PackageManager manager = context.getPackageManager();
         Intent intent = new Intent();
         intent.setAction("android.intent.action.MAIN");
         intent.addCategory("android.intent.category.LAUNCHER");
         List<ResolveInfo> resolveInfolist = manager.queryIntentActivities(intent, 0);
-        List<PackageInfo> packlist= manager.getInstalledPackages(0);
         if (resolveInfolist != null || resolveInfolist.isEmpty()) {
             for (ResolveInfo info : resolveInfolist) {
                 appInfo = new NotifyAppInfo();
                 appInfo.setAppName(info.activityInfo.loadLabel(manager).toString());
                 appInfo.setPakName(info.activityInfo.packageName);
                 appInfo.setAppIcon(info.activityInfo.loadIcon(manager));
-                appInfo.setAppState(checkAppState(info.activityInfo.packageName));
-                applist.add(appInfo);
+                appInfo.setAppState(Constant.State.NOTIFY_MANAGE);
+                if (whiteAppList.contains(appInfo.getPakName())) {
+                    appInfo.setAppState(Constant.State.NOTIFY_SHOW);
+                    whiteList.add(appInfo);
+                } else {
+                    applist.add(appInfo);
+                }
             }
         }
+        applist.addAll(0,whiteList);
         if (dataListener != null) {
             dataListener.onDataFinished(applist);
         }
+    }
+
+    private static void initWhiteList(Context context) {
+        whiteAppList.clear();
+        whiteAppList = getUnMonitoredApp(context);
     }
 
     public static void addUnMonitoredApp(String packName, Context context) {
@@ -111,17 +125,17 @@ public class NotifyDataProcessor {
         values.put("title", extras.getString(Notification.EXTRA_TITLE));
         values.put("notify_id", notification.getId());
         values.put("content", extras.getCharSequence(Notification.EXTRA_TEXT).toString());
-        values.put("when", extras.getLong(Notification.EXTRA_SHOW_WHEN));
+        values.put("time", notification.getPostTime());
         values.put("icon", getImageBuff((Bitmap) extras.getParcelable(Notification.EXTRA_LARGE_ICON)));
         values.put("packname", notification.getPackageName());
         resolver.insert(uri,values);
         resolver.notifyChange(uri,null);
     }
 
-    public static ArrayList<NotifyData> getAllNotifyData(Context context){
+    public static ArrayList<NotifyData> getAllNotifyData() {
         ArrayList<NotifyData> datalist = new ArrayList<>();
         Uri uri = Uri.parse(NOTIFY_URI);
-        ContentResolver resolver = context.getContentResolver();
+        ContentResolver resolver = mconext.getContentResolver();
         Cursor cursor = resolver.query(uri,null,null,null,null);
         cursor.moveToFirst();
         while (cursor.moveToNext()) {
@@ -129,9 +143,10 @@ public class NotifyDataProcessor {
             data.setTitle(cursor.getString(cursor.getColumnIndex("title")));
             data.setNotify_id(cursor.getInt(cursor.getColumnIndex("notify_id")));
             data.setContent(cursor.getString(cursor.getColumnIndex("content")));
-            data.setWhen(cursor.getLong(cursor.getColumnIndex("when")));
+            data.setWhen(cursor.getLong(cursor.getColumnIndex("time")));
             data.setIcon(getBitmapFromDB(cursor.getBlob(cursor.getColumnIndex("icon"))));
             data.setPkgName(cursor.getString(cursor.getColumnIndex("packname")));
+            datalist.add(data);
         }
         cursor.close();
         return datalist;
@@ -148,15 +163,15 @@ public class NotifyDataProcessor {
         return bmp;
     }
 
-    public static void removeNotifyData(int notify_id, Context context) {
+    public static void removeNotifyData(int notify_id) {
         Uri uri = Uri.parse(NOTIFY_URI);
-        ContentResolver resolver = context.getContentResolver();
+        ContentResolver resolver = mconext.getContentResolver();
         resolver.delete(uri,"notify_id = ?", new String[]{notify_id+""});
     }
 
-    public static void removeAllNotifyData(Context context) {
+    public static void removeAllNotifyData() {
         Uri uri = Uri.parse(NOTIFY_URI);
-        ContentResolver resolver = context.getContentResolver();
+        ContentResolver resolver = mconext.getContentResolver();
         resolver.delete(uri,null,null);
     }
 

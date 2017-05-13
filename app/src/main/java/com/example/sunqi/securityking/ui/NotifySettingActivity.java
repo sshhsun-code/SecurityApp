@@ -2,8 +2,6 @@ package com.example.sunqi.securityking.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +20,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -135,19 +131,6 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
         startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
     }
 
-    private void showNotifyFunNotificaion() {
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, NotificationBoxActivity.class), 0);
-        NotificationManager manager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
-        NotificationCompat.Builder ncBuilder = new NotificationCompat.Builder(this);
-        ncBuilder.setContentTitle("My Notification");
-        ncBuilder.setContentText("Notification Listener Service Example");
-        ncBuilder.setTicker("Notification Listener Service Example");
-        ncBuilder.setSmallIcon(R.mipmap.ic_launcher);
-        ncBuilder.setAutoCancel(false);
-        ncBuilder.setContentIntent(pendingIntent);
-        manager.notify((int) System.currentTimeMillis(), ncBuilder.build());
-    }
-
     private void processAppData() {
         mHandler = new Handler();
         NotifyDataProcessor.setDataListener(this);
@@ -182,11 +165,11 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                 if(NotificationMoniter.mInstance == null) {
                     Intent intent = new Intent(this, NotificationMoniter.class);
                     startService(intent);
+//                    showNotifyFunNotificaion();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            showNotifyFunNotificaion();
         }
     }
 
@@ -219,7 +202,6 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
     private class AppDataAdapter extends BaseAdapter {
         ArrayList<NotifyAppInfo> appList;
         Context mContext;
-        SwitchClickListener listener;
 
         public AppDataAdapter(ArrayList<NotifyAppInfo> list, Context context) {
             this.appList = list;
@@ -253,8 +235,8 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.notify_setting_ex_parent_item,null);
             }
             if (info != null) {
-                ((ImageView)convertView.findViewById(R.id.app_item_icon)).setBackgroundDrawable(info.getAppIcon());
-                ((ImageView)convertView.findViewById(R.id.app_switch)).setBackgroundDrawable(info.getAppState() == 0 ?getDrawable(R.drawable.switch_off):getDrawable(R.drawable.switch_on_1));
+                (convertView.findViewById(R.id.app_item_icon)).setBackgroundDrawable(info.getAppIcon());
+                (convertView.findViewById(R.id.app_switch)).setBackgroundDrawable(info.getAppState() == Constant.State.NOTIFY_MANAGE ?getDrawable(R.drawable.switch_off):getDrawable(R.drawable.switch_on_1));
                 ((TextView)convertView.findViewById(R.id.app_item_text)).setText(info.getAppName());
             }
             convertView.findViewById(R.id.app_switch).setOnClickListener(new View.OnClickListener() {
@@ -264,14 +246,14 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                         info.setAppState(Constant.State.NOTIFY_SHOW);
                         notifyDataSetChanged();
                         NotifyDataProcessor.addUnMonitoredApp(info.getPakName(),mContext);
+                    } else {
+                        info.setAppState(Constant.State.NOTIFY_MANAGE);
+                        notifyDataSetChanged();
+                        NotifyDataProcessor.removeUnMonitoredApp(info.getPakName(),mContext);
                     }
                 }
             });
             return convertView;
         }
-    }
-
-    private  interface SwitchClickListener {
-        void onClick(int position, int switch_state);
     }
 }
