@@ -45,7 +45,6 @@ public class NotificationInfoProcessor {
      * @param data
      */
     public static void removeNotifyData(NotifyData data) {
-        dataList.clear();
         NotifyDataProcessor.removeNotifyData(data.getNotify_id());
     }
 
