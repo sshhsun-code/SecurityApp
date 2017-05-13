@@ -6,6 +6,27 @@
 
     <include layout="@layout/normal_title"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:background="@color/safepay_default_bg">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/notificaiton"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共拦截20条通知"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:textColor="#fff"/>
+    </RelativeLayout>
     <ListView
         android:id="@+id/notify_list"
         android:layout_width="match_parent"
@@ -13,5 +34,21 @@
         android:dividerHeight="1px"
         android:divider="#dbdbdb"
         android:layout_weight="1"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center">
+        <Button
+            android:id="@+id/cancel_all"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="250dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#fff"
+            android:text="一键清理"
+            android:layout_height="40dp"
+            android:background="@color/safepay_default_bg"/>
+    </RelativeLayout>
 
 </LinearLayout>

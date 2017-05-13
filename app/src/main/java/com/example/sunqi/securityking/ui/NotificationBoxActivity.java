@@ -17,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
     private NotifyAdapter mAdapter;
 
     private ListView mNotifyListView;
+    private ImageView setting;
+    private Button cancel_all;
     NorifyDataObserver norifyDataObserver;
 
 
@@ -56,6 +59,7 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
     }
 
     private void initView() {
+        cancel_all = (Button) findViewById(R.id.cancel_all);
         mNotifyListView = (ListView) findViewById(R.id.notify_list);
         if (!datalist.isEmpty()) {
             mAdapter = new NotifyAdapter(datalist ,mcontext);
@@ -71,6 +75,7 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
                 handleIntent(data);
             }
         });
+        cancel_all.setOnClickListener(this);
     }
 
     @Override
@@ -128,12 +133,33 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
     }
 
     private void iniTitle() {
-
+        setting = (ImageView) findViewById(R.id.title_items);
+        setting.setImageResource(R.mipmap.setting);
+        setting.setVisibility(View.VISIBLE);
+        setting.setOnClickListener(this);
+        findViewById(R.id.normal_title_back).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.title_items:
 
+                break;
+
+            case R.id.normal_title_back:
+
+                break;
+
+            case R.id.cancel_all:
+                if (datalist.isEmpty()) {
+                    return;
+                }
+                NotificationInfoProcessor.removeAllNotifyData();
+                datalist.clear();
+                mAdapter.notifyDataSetChanged();
+                break;
+        }
     }
 
     @Override
