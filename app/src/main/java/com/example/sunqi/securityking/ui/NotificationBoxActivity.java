@@ -26,6 +26,7 @@ import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.bean.NotifyData;
 import com.example.sunqi.securityking.dataprovider.NotificationInfoProcessor;
 import com.example.sunqi.securityking.global.Constant;
+import com.example.sunqi.securityking.utils.AppIconUtils;
 import com.example.sunqi.securityking.utils.Commons;
 import com.example.sunqi.securityking.utils.TimeUtils;
 
@@ -224,6 +225,8 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
             ViewHolder viewHolder = new ViewHolder(convertView);
             if (data.getIcon() != null) {
                 viewHolder.icon.setImageBitmap(data.getIcon());
+            } else {
+                viewHolder.icon.setImageBitmap(AppIconUtils.getIcon(data.getPkgName()));
             }
             viewHolder.title.setText(data.getTitle());
             viewHolder.content.setText(data.getContent());

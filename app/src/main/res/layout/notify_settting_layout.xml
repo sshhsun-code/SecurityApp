@@ -6,12 +6,56 @@
 
     <include layout="@layout/normal_title"/>
 
-    <ListView
-        android:id="@+id/app_list"
+    <RelativeLayout
+        android:id="@+id/swich_layout"
+        android:layout_width="match_parent"
+        android:background="@color/safeclass_default_bg"
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#707070"
+            android:id="@+id/swich_open"
+            android:textSize="17sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/swich_notificaion_manage"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#707070"
+            android:layout_below="@id/swich_open"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/swich_notificaion_manage_guide"/>
+        <ImageView
+            android:id="@+id/swich_button"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/switch_off_1"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:dividerHeight="1px"
-        android:divider="#dbdbdb"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+        <ListView
+            android:id="@+id/app_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="1px"
+            android:divider="#dbdbdb"/>
+        <View
+            android:id="@+id/top_list"
+            android:visibility="visible"
+            android:background="#a2dbdbdb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
 </LinearLayout>

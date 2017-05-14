@@ -30,11 +30,13 @@
 
     <ImageView
         android:id="@+id/app_switch"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:focusable="false"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/switch_on_1"/>
+        android:layout_marginRight="5dp"
+        android:background="@drawable/switch_off"/>
 
 </RelativeLayout>

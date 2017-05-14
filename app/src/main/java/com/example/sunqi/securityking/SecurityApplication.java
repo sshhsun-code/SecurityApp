@@ -3,6 +3,8 @@ package com.example.sunqi.securityking;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import com.example.sunqi.securityking.utils.AppIconUtils;
+
 import java.util.HashSet;
 
 /**
@@ -24,7 +26,12 @@ public class SecurityApplication extends Application {
     }
 
     private void initApplication() {
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppIconUtils.initBitmaps();
+            }
+        }).start();
     }
 
     public static SecurityApplication getInstance() {

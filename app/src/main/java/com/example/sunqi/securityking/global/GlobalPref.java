@@ -3,6 +3,8 @@ package com.example.sunqi.securityking.global;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.sunqi.securityking.SecurityApplication;
+
 /**
  * Created by sshunsun on 2017/5/6.
  */
@@ -27,6 +29,10 @@ public class GlobalPref {
             }
         }
         return instance;
+    }
+
+    public static GlobalPref getInstance() {
+       return getInstance(SecurityApplication.getInstance());
     }
 
     private static void initShared(Context ctx, String sharedname) {

@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.bean.NotifyAppInfo;
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.Constant;
+import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.service.NotificationMoniter;
 import com.example.sunqi.securityking.utils.NotifyServiceUtil;
 
@@ -43,6 +45,9 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
     private ArrayList<NotifyAppInfo> baseAppInfos;
     private AppDataAdapter mAdapter;
     private Handler mHandler;
+    private View top_list;//蒙层,遮住ListView
+    private ImageView swich_button;
+    private boolean is_swich_on = false;
 
 
 
@@ -74,6 +79,12 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
     }
 
     private void initView() {
+        top_list = findViewById(R.id.top_list);
+        top_list.setVisibility(is_swich_on ? View.GONE : View.VISIBLE);
+        top_list.setOnClickListener(this);
+        swich_button = (ImageView) findViewById(R.id.swich_button);
+        swich_button.setImageResource(is_swich_on ? R.drawable.switch_on_2 : R.drawable.switch_off_1);
+        swich_button.setOnClickListener(this);
         mListView = (ListView) findViewById(R.id.app_list);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,6 +99,7 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
 
     private void initData() {
         processAppData();
+        is_swich_on = GlobalPref.getInstance(this).getBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, false);
         boolean isNotifyRead = isNotifyReadEnable();
         if (!isNotifyRead) {
             showConfirmDialog();
@@ -150,7 +162,22 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.swich_button:
+                if (is_swich_on) {
+                    is_swich_on = false;
+                    top_list.setVisibility(View.VISIBLE);
+                    swich_button.setImageResource(R.drawable.switch_off);
+                } else {
+                    is_swich_on = true;
+                    top_list.setVisibility(View.GONE);
+                    swich_button.setImageResource(R.drawable.switch_on_1);
+                }
 
+                GlobalPref.getInstance().putBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, is_swich_on);
+                break;
+            case R.id.top_list:
+
+                break;
         }
     }
 

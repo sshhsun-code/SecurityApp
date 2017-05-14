@@ -28,7 +28,7 @@ public class NotificationMoniter extends NotificationListenerService {
 
     private static ArrayList<Class<? extends NotificationListener>> sListenerClass = new ArrayList<>();
     AppObserver appObserver;
-    private static ArrayList<String> whiteNameApps = new ArrayList<>();
+    public static ArrayList<String> whiteNameApps = new ArrayList<>();
     public static NotificationMoniter mInstance;
 
     private String uriStr = Constant.URI.NOTIFY_APP_URI;
@@ -154,6 +154,10 @@ public class NotificationMoniter extends NotificationListenerService {
         startForeground((int) System.currentTimeMillis(), ncBuilder.build());
     }
 
+    public static boolean isWhiteApp(String pkgName) {
+        return whiteNameApps.contains(pkgName);
+    }
+
 
     private class AppObserver extends ContentObserver{
         public AppObserver() {
@@ -166,4 +170,6 @@ public class NotificationMoniter extends NotificationListenerService {
             refreshWhiteName();
         }
     }
+
+
 }
