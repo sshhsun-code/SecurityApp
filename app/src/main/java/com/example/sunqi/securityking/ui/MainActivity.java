@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +19,17 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sunqi.securityking.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener{
+    private DrawerLayout drawer_layout;
+    private RelativeLayout right_drawer;
+    private ImageView title_items;
     private GridView mian_gridView;
     private ArcProgress arc_progress;
     private ArcProgress arc_progress2;
@@ -31,7 +37,7 @@ public class MainActivity extends Activity {
     private String[] funs = {"进程管理","防通知打扰","红包提醒","病毒检测"};
     private int[] icons = {R.drawable.manager, R.drawable.notify, R.drawable.redpacket, R.drawable.bingdu};
     private Context mcontext;
-
+    private boolean isShowing = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        startAnimator(56, 77);
+        if (isShowing) {
+            startAnimator(56, 77);
+        }
     }
 
     /**
@@ -71,6 +79,10 @@ public class MainActivity extends Activity {
 
     private void initView() {
         initTitle();
+        right_drawer = (RelativeLayout) findViewById(R.id.right_drawer);
+        right_drawer.setOnClickListener(this);
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_layout.addDrawerListener(listener);
         arc_progress = (ArcProgress) findViewById(R.id.arc_progress);
         arc_progress2 = (ArcProgress) findViewById(R.id.arc_progress2);
         mian_gridView = (GridView) findViewById(R.id.mian_gridView);
@@ -95,8 +107,45 @@ public class MainActivity extends Activity {
     }
 
     private void initTitle() {
-
+        title_items = (ImageView) findViewById(R.id.title_items);
+        title_items.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.title_items:
+                drawer_layout.openDrawer(Gravity.RIGHT);
+                break;
+            case R.id.right_drawer:
+                Toast.makeText(MainActivity.this,"点击侧边栏", Toast.LENGTH_LONG).show();
+                drawer_layout.closeDrawer(Gravity.RIGHT);
+                break;
+        }
+    }
+
+    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {
+
+        }
+
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            isShowing = false;
+        }
+
+        @Override
+        public void onDrawerClosed(View drawerView) {
+            isShowing = true;
+            startAnimator(56, 77);
+        }
+
+        @Override
+        public void onDrawerStateChanged(int newState) {
+
+        }
+    };
 
     private void setStatusBarTranslate(){
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);

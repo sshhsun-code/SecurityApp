@@ -2,6 +2,7 @@
 <android.support.v4.widget.DrawerLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
 
@@ -76,5 +77,23 @@
                 android:layout_centerInParent="true">
             </GridView>
         </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/right_drawer"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="#fff"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这是右边栏"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+    </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>
