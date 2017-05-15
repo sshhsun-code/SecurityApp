@@ -1,5 +1,6 @@
 package com.example.sunqi.securityking.ui;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -19,12 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sunqi.securityking.R;
+import com.github.lzyzsd.circleprogress.ArcProgress;
 
 public class MainActivity extends Activity {
     private GridView mian_gridView;
-
+    private ArcProgress arc_progress;
+    private ArcProgress arc_progress2;
     private GridAdapter madapter;
-    private String[] funs = {"应用锁","防通知打扰","红包提醒","垃圾清理"};
+    private String[] funs = {"进程管理","防通知打扰","红包提醒","病毒检测"};
+    private int[] icons = {R.drawable.manager, R.drawable.notify, R.drawable.redpacket, R.drawable.bingdu};
     private Context mcontext;
 
 
@@ -37,6 +42,28 @@ public class MainActivity extends Activity {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startAnimator(56, 77);
+    }
+
+    /**
+     * 主界面的指示图开始变化
+     * @param progress_1 存储空间百分比
+     * @param progress_2 内存百分比
+     */
+    private void startAnimator(int progress_1, int progress_2) {
+        ObjectAnimator anim = ObjectAnimator.ofInt(arc_progress, "progress", 0, progress_1);
+        anim.setInterpolator(new DecelerateInterpolator());
+        anim.setDuration(1500);
+        ObjectAnimator anim2 = ObjectAnimator.ofInt(arc_progress2, "progress", 0, progress_2);
+        anim2.setInterpolator(new DecelerateInterpolator());
+        anim2.setDuration(1500);
+        anim.start();
+        anim2.start();
+    }
+
     private void initData() {
         madapter = new GridAdapter(this);
         mcontext = this;
@@ -44,6 +71,8 @@ public class MainActivity extends Activity {
 
     private void initView() {
         initTitle();
+        arc_progress = (ArcProgress) findViewById(R.id.arc_progress);
+        arc_progress2 = (ArcProgress) findViewById(R.id.arc_progress2);
         mian_gridView = (GridView) findViewById(R.id.mian_gridView);
         mian_gridView.setAdapter(madapter);
         mian_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -54,6 +83,11 @@ public class MainActivity extends Activity {
                         Toast.makeText(mcontext,"防通知打扰",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(mcontext, NotifySettingActivity.class);
                         mcontext.startActivity(intent);
+                        break;
+                    case 2:
+                        Toast.makeText(mcontext,"红包提醒",Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(mcontext, RedPacketActivity.class);
+                        mcontext.startActivity(intent2);
                         break;
                 }
             }
@@ -131,6 +165,9 @@ public class MainActivity extends Activity {
             fun_image = (ImageView) convertView.findViewById(R.id.fun_item_icon);
             if (fun_text != null) {
                 fun_text.setText(funs[position]);
+            }
+            if (fun_image != null) {
+                fun_image.setImageResource(icons[position]);
             }
             return convertView;
         }
