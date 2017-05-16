@@ -4,6 +4,7 @@
     android:background="@color/safepay_default_bg"
     android:paddingTop="30dp"
     android:paddingBottom="16dp"
+    android:id="@+id/normal_title_layout"
     android:layout_height="wrap_content">
     <ImageView
         android:layout_marginTop="12dp"
@@ -31,6 +32,6 @@
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="6dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:src="@drawable/title_item1"/>
 </RelativeLayout>

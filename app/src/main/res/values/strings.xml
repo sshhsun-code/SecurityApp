@@ -13,4 +13,11 @@
     <string name="scan_finished">扫描完成 !</string>
     <string name="system_app">系统应用</string>
     <string name="start_scan">开始扫描</string>
+    <string name="redpacket_permission_recovery">红包不提醒?</string>
+    <string name="weixin">微信</string>
+    <string name="QQ">QQ</string>
+    <string name="repacket_notify_count">已提醒0个红包</string>
+    <string name="repacket_autoopen">来红包自动打开应用</string>
+    <string name="repacket_autoopen_notice">自动打开聊天界面，抢红包快人一步</string>
+    <string name="repacket_notify">红包提醒</string>
 </resources>

@@ -5,21 +5,32 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.global.GlobalPref;
 
 /**
+ * 红包提醒的相关设置
  * Created by sshunsun on 2017/5/14.
  */
-public class RedPacketActivity extends Activity {
+public class RedPacketActivity extends Activity implements View.OnClickListener{
     private GlobalPref globalPref = GlobalPref.getInstance();
     private Context mcontext = SecurityApplication.getInstance().getApplicationContext();
+    private View includeView;
+    private ImageView normal_title_back;
+    private ImageView title_items;
+    private TextView normal_title_text;
+    private TextView record_count;
+    private TextView redpacket_permission;
+    private ImageView weixin_switch;
+    private ImageView qq_switch;
+    private ImageView auto_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +43,50 @@ public class RedPacketActivity extends Activity {
     }
 
     private void iniTitle() {
-
+        includeView = findViewById(R.id.redpacket_top);
+        includeView.findViewById(R.id.normal_title_layout).setBackgroundResource(R.color.safepay_default_bg);
+        normal_title_back = (ImageView) includeView.findViewById(R.id.normal_title_back);
+        title_items = (ImageView) includeView.findViewById(R.id.title_items);
+        title_items.setImageResource(R.drawable.share);
+        normal_title_text = (TextView) includeView.findViewById(R.id.normal_title_text);
+        normal_title_text.setText(getString(R.string.repacket_notify));
+        record_count = (TextView) findViewById(R.id.record_count);
+        redpacket_permission = (TextView) findViewById(R.id.redpacket_permission);
+        weixin_switch = (ImageView) findViewById(R.id.weixin_switch);
+        qq_switch = (ImageView) findViewById(R.id.qq_switch);
+        auto_switch = (ImageView) findViewById(R.id.auto_switch);
+        normal_title_back.setOnClickListener(this);
+        title_items.setOnClickListener(this);
+        redpacket_permission.setOnClickListener(this);
+        weixin_switch.setOnClickListener(this);
+        qq_switch.setOnClickListener(this);
+        auto_switch.setOnClickListener(this);
     }
 
     private void initView() {
-
+        findViewById(R.id.redpacket_layout).setBackgroundResource(R.color.safepay_default_bg);
     }
 
     private void initData() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.normal_title_back:
+                break;
+            case R.id.title_items:
+                break;
+            case R.id.redpacket_permission:
+                break;
+            case R.id.weixin_switch:
+                break;
+            case R.id.qq_switch:
+                break;
+            case R.id.auto_switch:
+                break;
+        }
     }
 
     private void setStatusBarTranslate() {
