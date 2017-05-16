@@ -101,6 +101,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
                         Intent intent2 = new Intent(mcontext, RedPacketActivity.class);
                         mcontext.startActivity(intent2);
                         break;
+                    case 3:
+                        Toast.makeText(mcontext,"病毒检测",Toast.LENGTH_SHORT).show();
+                        Intent intent3 = new Intent(mcontext, ScanVirusActicity.class);
+                        mcontext.startActivity(intent3);
+                        break;
                 }
             }
         });

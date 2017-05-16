@@ -35,7 +35,23 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.RedpacketSettingActivity">
+            <intent-filter>
+                <action android:name="security.sunqi.normalfunction" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".ui.RedPacketActivity">
+            <intent-filter>
+                <action android:name="security.sunqi.normalfunction" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.ScanVirusActicity">
             <intent-filter>
                 <action android:name="security.sunqi.normalfunction" />
 
