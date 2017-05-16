@@ -3,8 +3,8 @@ package com.example.sunqi.securityking.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,11 +29,16 @@ public class ScanVirusActicity extends Activity {
     private Button start_scan;
 
     private Handler mhandler;
+    private HandlerThread scanThread;
+    private Handler scanHandler;
 
-    private static int i = 0;
+    private boolean isScanning = true;
+
+    private static int index = 0;
 
     private static final int SCAN_FINISHED = 1;
     private static final int SCANING = 2;
+    private static final int MSG_UPDATE_INFO = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,41 +52,9 @@ public class ScanVirusActicity extends Activity {
         racarscanview.stopScan();
         scan_state = (TextView) findViewById(R.id.scan_state);
         app_name = (TextView) findViewById(R.id.app_name);
-        start_scan = (Button) findViewById(R.id.start_scan);
-        start_scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startScan();
-            }
-        });
+
     }
 
-    private void startScan() {
-        racarscanview.startScan();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    Message message = mhandler.obtainMessage(SCANING);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-//        if (!apps.isEmpty()) {
-//            for (String app: apps) {
-//                app_name.setText(app);
-//                try {
-//                    Thread.sleep(200);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        mhandler.sendEmptyMessage(SCAN_FINISHED);
-    }
 
     private void getToListActicity() {
         racarscanview.stopScan();
@@ -105,16 +78,65 @@ public class ScanVirusActicity extends Activity {
                 }
             }
         };
+
+        scanThread = new HandlerThread("Scan_Thread");
+        scanThread.start();
+        scanHandler = new Handler(scanThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                checkForUpdate();
+                if (isScanning)
+                {
+                    scanHandler.sendEmptyMessageDelayed(MSG_UPDATE_INFO, 500);
+                }
+            }
+        };
+    }
+
+    private void checkForUpdate() {
+        if (index < apps.size() - 1) {
+            try {
+                Thread.sleep(200);
+                mhandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        app_name.setText(apps.get(index ++));
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            isScanning = true;
+        } else {
+            isScanning = false;
+        }
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
-//        if (!apps.isEmpty()) {
-//            for (String app: apps) {
-//                app_name.setText(app);
-//            }
-//        }
-//        mhandler.sendEmptyMessage(SCAN_FINISHED);
+        //开始查询
+        isScanning = true;
+        scanHandler.sendEmptyMessage(MSG_UPDATE_INFO);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        //停止查询
+        isScanning = false;
+        scanHandler.removeMessages(MSG_UPDATE_INFO);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        scanThread.quit();
+
+        index = 0;
     }
 }
