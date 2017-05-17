@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="gen_txt_white_50pa">#80ffffff</color>
+    <color name="notification_background_color_blue">#0D7DFA</color>
+    <!-- rank protect -->
+    <color name="cn_rank_protect_bg_blue">#297fe8</color>
+    <color name="cn_rank_protect_bg_red">#fe563c</color>
+    <color name="cn_rank_protect_bg_yellow">#fd8314</color>
+    <color name="gen_card_background">#e7e7e7</color>
 </resources>

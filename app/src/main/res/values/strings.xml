@@ -20,4 +20,34 @@
     <string name="repacket_autoopen">来红包自动打开应用</string>
     <string name="repacket_autoopen_notice">自动打开聊天界面，抢红包快人一步</string>
     <string name="repacket_notify">红包提醒</string>
+
+    <string name="cn_rank_protect_monitor_card_text1">高级安全防护权限</string>
+    <string name="cn_rank_protect_monitor_card_text2">&lt;font color=#878787&gt;实时监控&lt;/font&gt;&lt;font color=#f20000&gt;病毒风险&lt;/font&gt;&lt;font color=#878787&gt;及&lt;/font&gt;&lt;font color=#f20000&gt;系统漏洞&lt;/font&gt;</string>
+    <string name="cn_rank_protect_monitor_card_text3">确保病毒监控等功能稳定运行</string>
+    <string name="cn_rank_protect_antiharass_card_text1">骚扰信息拦截权限</string>
+    <string name="cn_rank_protect_antiharass_card_text2">协助实时拦截骚扰电话和短信</string>
+    <string name="cn_rank_protect_applock_card_text1">应用隐私保护权限</string>
+    <string name="cn_rank_protect_applock_card_text2">阻止其他应用获取个人隐私</string>
+    <string name="cn_rank_protect_small_btn_open">开启</string>
+    <string name="cn_rank_protect_small_btn_unopen">未开启</string>
+    <string name="cn_rank_protect_bit_btn_one_key_open">一键开启</string>
+    <string name="cn_rank_protect_title">防护等级</string>
+    <string name="cn_rank_protect_main_title_high">极高</string>
+    <string name="cn_rank_protect_main_title_mid">可提升</string>
+    <string name="cn_rank_protect_main_title_low">极低</string>
+    <string name="cn_rank_protect_sub_title_high">可放心使用您的手机</string>
+    <string name="cn_rank_protect_sub_title_mid">开启全部权限，提升安全等级</string>
+    <string name="cn_rank_protect_sub_title_low">易受病毒攻击，建议立即提升</string>
+    <string name="cn_rank_protect_dialog_title">&lt;font color=#ff3338&gt;请确认&lt;/font&gt;</string>
+    <string name="cn_rank_protect_dialog_content">&lt;font color=#FF2020&gt;自启动，后台运行&lt;/font&gt;&lt;font color=#979797&gt;是高级安全防护必要权限，请您确认是否已开启&lt;/font&gt;</string>
+    <string name="cn_rank_protect_emui5_dialog_content">&lt;font color=#FF2020&gt;锁屏不清理&lt;/font&gt;&lt;font color=#979797&gt;是高级安全防护必要权限，请您确认是否已处理&lt;/font&gt;</string>
+    <string name="cn_rank_protect_dialog_btn_no">&lt;font color=#525252&gt;暂不开启&lt;/font&gt;</string>
+    <string name="cn_rank_protect_emui5_dialog_btn_no">&lt;font color=#525252&gt;暂不处理&lt;/font&gt;</string>
+    <string name="cn_rank_protect_dialog_btn_yes">&lt;font color=#525252&gt;我已开启&lt;/font&gt;</string>
+    <string name="cn_rank_protect_emui5_dialog_btn_yes">&lt;font color=#525252&gt;我已处理&lt;/font&gt;</string>
+    <string name="cn_rank_protect_landing_checking">正在检测您的防护等级</string>
+    <string name="cn_rank_protect_privacy">隐私保护</string>
+    <string name="cn_rank_protect_virus">病毒防护</string>
+    <string name="cn_rank_protect_harass">骚扰拦截</string>
+    <string name="cn_rank_protect_landing_warning">防护等级\n极低</string>
 </resources>
