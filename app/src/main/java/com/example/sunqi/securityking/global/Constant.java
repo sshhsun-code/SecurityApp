@@ -23,4 +23,14 @@ public class Constant {
         public static final String NOTIFY_APP_URI = "content://app.security.sunqi/app_notify";
         public static final String NOTIFY_DATA_URI = "content://notify.security.sunqi/data_notify";
     }
+
+    // 安全等级：低、中、高
+    public enum ProtectLevel{LOW, MID, HIGH}
+
+    // 权限
+    public enum Permission {
+        AUTO_SETUP, // 自启动
+        NOTIFICATION_READ, // 通知读取
+        USAGE_STATS, // 查看进程信息
+    }
 }

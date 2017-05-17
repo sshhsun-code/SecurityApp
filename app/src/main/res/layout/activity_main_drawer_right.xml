@@ -196,7 +196,7 @@
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
             android:background="#515151"/>
-    </RelativeLayout>
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:paddingTop="10dp"
@@ -247,12 +247,12 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#707070"
-            android:text="已用心保护你    天"/>
+            android:text="已用心保护你     天"/>
         <TextView
             android:id="@+id/protect_days_num"
             android:layout_toRightOf="@id/main_logo"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textStyle="bold"

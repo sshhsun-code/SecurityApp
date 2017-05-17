@@ -330,11 +330,11 @@
                 android:id="@+id/protect_days_num"
                 android:layout_toRightOf="@id/main_logo"
                 android:layout_width="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="112dp"
+                android:layout_marginLeft="116dp"
                 android:textColor="#1296db"
                 android:text="2"/>
         </RelativeLayout>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 import com.example.sunqi.securityking.R;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends Activity implements View.OnClickListener{
     private DrawerLayout drawer_layout;
     private RelativeLayout right_drawer;
@@ -33,6 +36,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private GridView mian_gridView;
     private ArcProgress arc_progress;
     private ArcProgress arc_progress2;
+    private RelativeLayout level_layout;
+    private ImageView level_icon;
+    private TextView defend_level_num;
+    private TextView protect_days_num;
+    private TextView defend_level_notice;
+    private RelativeLayout redpacket_layout;
+    private RelativeLayout process_layout;
+    private RelativeLayout notify_layout;
+    private RelativeLayout virus_layout;
+    private RelativeLayout me_layout;
     private GridAdapter madapter;
     private String[] funs = {"进程管理","防通知打扰","红包提醒","病毒检测"};
     private int[] icons = {R.drawable.manager, R.drawable.notify, R.drawable.redpacket, R.drawable.bingdu};
@@ -109,6 +122,22 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 }
             }
         });
+        defend_level_notice = (TextView) findViewById(R.id.defend_level_notice);
+        protect_days_num = (TextView) findViewById(R.id.protect_days_num);
+        defend_level_num = (TextView) findViewById(R.id.defend_level_num);
+        level_icon = (ImageView) findViewById(R.id.level_icon);
+        level_layout = (RelativeLayout) findViewById(R.id.level_layout);
+        redpacket_layout = (RelativeLayout) findViewById(R.id.redpacket_layout);
+        process_layout = (RelativeLayout) findViewById(R.id.process_layout);
+        notify_layout = (RelativeLayout) findViewById(R.id.notify_layout);
+        virus_layout = (RelativeLayout) findViewById(R.id.virus_layout);
+        me_layout = (RelativeLayout) findViewById(R.id.me_layout);
+        me_layout.setOnClickListener(this);
+        virus_layout.setOnClickListener(this);
+        notify_layout.setOnClickListener(this);
+        level_layout.setOnClickListener(this);
+        redpacket_layout.setOnClickListener(this);
+        process_layout.setOnClickListener(this);
     }
 
     private void initTitle() {
@@ -124,6 +153,36 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.right_drawer:
                 Toast.makeText(MainActivity.this,"点击侧边栏", Toast.LENGTH_LONG).show();
+                drawer_layout.closeDrawer(Gravity.RIGHT);
+                break;
+            case R.id.me_layout:
+                Intent me_intent = new Intent(MainActivity.this, AboutActivity.class);
+                mcontext.startActivity(me_intent);
+                drawer_layout.closeDrawer(Gravity.RIGHT);
+                break;
+            case R.id.virus_layout:
+                Intent virus_intent = new Intent(MainActivity.this, ScanVirusActicity.class);
+                mcontext.startActivity(virus_intent);
+                drawer_layout.closeDrawer(Gravity.RIGHT);
+                break;
+            case R.id.notify_layout:
+                Intent notify_intent = new Intent(MainActivity.this, NotifySettingActivity.class);
+                mcontext.startActivity(notify_intent);
+                drawer_layout.closeDrawer(Gravity.RIGHT);
+                break;
+            case R.id.level_layout:
+                Intent level_intent = new Intent(MainActivity.this, PermissionLevelActivity.class);
+                mcontext.startActivity(level_intent);
+                drawer_layout.closeDrawer(Gravity.RIGHT);
+                break;
+            case R.id.redpacket_layout:
+                Intent redpacket_intent = new Intent(MainActivity.this, RedPacketActivity.class);
+                mcontext.startActivity(redpacket_intent);
+                drawer_layout.closeDrawer(Gravity.RIGHT);
+                break;
+            case R.id.process_layout:
+                Intent process_intent = new Intent(MainActivity.this, ProcessActivity.class);
+                mcontext.startActivity(process_intent);
                 drawer_layout.closeDrawer(Gravity.RIGHT);
                 break;
         }
@@ -148,9 +207,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         @Override
         public void onDrawerStateChanged(int newState) {
-
+            if(newState == DrawerLayout.STATE_DRAGGING) {
+                refreshDrawer();
+            }
         }
     };
+
+    private void refreshDrawer() {
+
+    }
 
     private void setStatusBarTranslate(){
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);

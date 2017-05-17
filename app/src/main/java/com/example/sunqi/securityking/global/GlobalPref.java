@@ -18,6 +18,8 @@ public class GlobalPref {
     public static final String SECURITY_KEY_SWITCH_REDPACKET = "key_switch_redpacket";
     public static final String SECURITY_KEY_IS_FIRST_IN = "key_is_first_in";
 
+    public static final String SECURITY_HAS_ENTER_AUTOSTART = "key_has_enter_auto_start";
+
     protected GlobalPref() {
     }
 

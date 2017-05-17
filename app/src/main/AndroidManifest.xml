@@ -59,6 +59,30 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.PermissionLevelActivity">
+            <intent-filter>
+                <action android:name="security.sunqi.normalfunction" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.AboutActivity">
+            <intent-filter>
+                <action android:name="security.sunqi.normalfunction" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.ProcessActivity">
+            <intent-filter>
+                <action android:name="security.sunqi.normalfunction" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.KeepForegroundActivity"
             android:excludeFromRecents="true"
