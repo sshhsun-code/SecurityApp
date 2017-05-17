@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,7 +50,6 @@ public class ScanVirusActicity extends Activity {
 
     private void initView() {
         racarscanview = (RadarScanView) findViewById(R.id.racarscanview);
-        racarscanview.stopScan();
         scan_state = (TextView) findViewById(R.id.scan_state);
         app_name = (TextView) findViewById(R.id.app_name);
 
@@ -87,7 +87,7 @@ public class ScanVirusActicity extends Activity {
                 checkForUpdate();
                 if (isScanning)
                 {
-                    scanHandler.sendEmptyMessageDelayed(MSG_UPDATE_INFO, 500);
+                    scanHandler.sendEmptyMessageDelayed(MSG_UPDATE_INFO, 70);
                 }
             }
         };
@@ -96,10 +96,11 @@ public class ScanVirusActicity extends Activity {
     private void checkForUpdate() {
         if (index < apps.size() - 1) {
             try {
-                Thread.sleep(200);
+                Thread.sleep(70);
                 mhandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        Log.e("AntiVirus", index + ":"+apps.get(index));
                         app_name.setText(apps.get(index ++));
                     }
                 });
@@ -109,6 +110,7 @@ public class ScanVirusActicity extends Activity {
             isScanning = true;
         } else {
             isScanning = false;
+            mhandler.sendEmptyMessage(SCAN_FINISHED);
         }
     }
 

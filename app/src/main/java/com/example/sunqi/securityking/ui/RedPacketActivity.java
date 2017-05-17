@@ -38,13 +38,11 @@ public class RedPacketActivity extends Activity implements View.OnClickListener{
         setStatusBarTranslate();
         setContentView(R.layout.activity_redpacket);
         initData();
-        initView();
-        iniTitle();
+        iniTitleAndView();
     }
 
-    private void iniTitle() {
+    private void iniTitleAndView() {
         includeView = findViewById(R.id.redpacket_top);
-        includeView.findViewById(R.id.normal_title_layout).setBackgroundResource(R.color.safepay_default_bg);
         normal_title_back = (ImageView) includeView.findViewById(R.id.normal_title_back);
         title_items = (ImageView) includeView.findViewById(R.id.title_items);
         title_items.setImageResource(R.drawable.share);
@@ -61,10 +59,6 @@ public class RedPacketActivity extends Activity implements View.OnClickListener{
         weixin_switch.setOnClickListener(this);
         qq_switch.setOnClickListener(this);
         auto_switch.setOnClickListener(this);
-    }
-
-    private void initView() {
-        findViewById(R.id.redpacket_layout).setBackgroundResource(R.color.safepay_default_bg);
     }
 
     private void initData() {
