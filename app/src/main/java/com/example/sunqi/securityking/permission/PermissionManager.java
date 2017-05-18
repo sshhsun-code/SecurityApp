@@ -1,12 +1,17 @@
 package com.example.sunqi.securityking.permission;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 
 import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.global.GlobalPref;
+import com.example.sunqi.securityking.permission.ui.PermissionTutotialRoutingActivity;
 import com.example.sunqi.securityking.utils.NotifyServiceUtil;
 import com.example.sunqi.securityking.utils.UsageStatsUtil;
+
+import java.util.List;
 
 /**
  * 检测权限开启状态，防护等级
@@ -15,6 +20,7 @@ import com.example.sunqi.securityking.utils.UsageStatsUtil;
 
 public class PermissionManager {
 
+    private static Context mcontext = SecurityApplication.getInstance();
 
     public static boolean checkPermission(Constant.Permission permission) {
         boolean result = true;
@@ -41,5 +47,16 @@ public class PermissionManager {
             return Constant.ProtectLevel.HIGH;
         }
         return Constant.ProtectLevel.LOW;
+    }
+
+    public static void GuidePermission(int task) {
+        Intent intent = new Intent(SecurityApplication.getInstance(), PermissionTutotialRoutingActivity.class);
+        intent.putExtra(PermissionTutotialRoutingActivity.TASK, task);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mcontext.startActivity(intent);
+    }
+
+    public static void GuidePermission(List<Constant.Permission> permissionList) {
+
     }
 }

@@ -80,17 +80,18 @@
 
     <RelativeLayout
         android:id="@+id/right_drawer"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:focusable="true"
         android:clickable="true"
-        android:background="#fff">
+        android:background="#fff"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RelativeLayout
             android:id="@+id/level_layout"
             android:layout_width="match_parent"
-            android:background="@color/safepay_default_bg_red"
+            android:background="@color/cn_rank_protect_bg_red"
             android:layout_height="150dp">
             <ImageView
                 android:id="@+id/level_icon_bg"
@@ -98,15 +99,8 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/circle"/>
+                android:src="@drawable/low"/>
 
-            <ImageView
-                android:id="@+id/level_icon"
-                android:layout_centerVertical="true"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="25dp"
-                android:src="@drawable/level_high_icon"/>
             <TextView
                 android:id="@+id/defend_level"
                 android:layout_width="wrap_content"
@@ -127,7 +121,7 @@
                 android:layout_toRightOf="@id/defend_level"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="极高"/>
+                android:text="极低"/>
 
             <TextView
                 android:id="@+id/defend_level_notice"
@@ -150,7 +144,12 @@
                 android:textSize="14sp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="3dp"
                 android:textStyle="bold"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="#6fffffff"
                 android:text="立即查看"/>
 
         </RelativeLayout>
@@ -164,6 +163,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="0dp"
                 android:paddingLeft="10dp"
+                android:background="@drawable/main_drawer_right_item"
                 android:id="@+id/redpacket_layout"
                 android:layout_height="60dp">
                 <ImageView
@@ -194,6 +194,7 @@
                 android:paddingBottom="0dp"
                 android:paddingLeft="10dp"
                 android:id="@+id/process_layout"
+                android:background="@drawable/main_drawer_right_item"
                 android:layout_height="60dp">
                 <ImageView
                     android:id="@+id/process_icon"
@@ -222,6 +223,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="0dp"
                 android:paddingLeft="10dp"
+                android:background="@drawable/main_drawer_right_item"
                 android:id="@+id/notify_layout"
                 android:layout_height="60dp">
                 <ImageView
@@ -251,6 +253,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="0dp"
                 android:paddingLeft="10dp"
+                android:background="@drawable/main_drawer_right_item"
                 android:id="@+id/virus_layout"
                 android:layout_height="60dp">
                 <ImageView
@@ -280,6 +283,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="0dp"
                 android:paddingLeft="10dp"
+                android:background="@drawable/main_drawer_right_item"
                 android:id="@+id/me_layout"
                 android:layout_height="60dp">
                 <ImageView
@@ -325,7 +329,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#707070"
-                android:text="已用心保护你      天"/>
+                android:text="已用心保护你     天"/>
             <TextView
                 android:id="@+id/protect_days_num"
                 android:layout_toRightOf="@id/main_logo"

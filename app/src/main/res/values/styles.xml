@@ -45,7 +45,7 @@
         <item name="android:layout_marginRight">29dp</item>
     </style>
     <style name="rank_protect_card_btn_not_ok">
-        <item name="android:text">"未开启"</item>
+        <item name="android:text">"点击开启"</item>
         <item name="android:textColor">#fe563c</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_marginRight">11dp</item>
@@ -74,5 +74,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#878787</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Theme.AppLockTransparent.Holo.GrayBg" parent="android:Theme.Holo.Light">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

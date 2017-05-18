@@ -37,7 +37,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private ArcProgress arc_progress;
     private ArcProgress arc_progress2;
     private RelativeLayout level_layout;
-    private ImageView level_icon;
     private TextView defend_level_num;
     private TextView protect_days_num;
     private TextView defend_level_notice;
@@ -125,7 +124,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         defend_level_notice = (TextView) findViewById(R.id.defend_level_notice);
         protect_days_num = (TextView) findViewById(R.id.protect_days_num);
         defend_level_num = (TextView) findViewById(R.id.defend_level_num);
-        level_icon = (ImageView) findViewById(R.id.level_icon);
         level_layout = (RelativeLayout) findViewById(R.id.level_layout);
         redpacket_layout = (RelativeLayout) findViewById(R.id.redpacket_layout);
         process_layout = (RelativeLayout) findViewById(R.id.process_layout);

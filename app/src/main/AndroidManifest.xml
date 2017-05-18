@@ -83,6 +83,28 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".permission.ui.TutorialActivity"
+            android:theme="@style/Theme.AppLockTransparent.Holo.GrayBg">
+            <intent-filter>
+                <action android:name="security.sunqi.normalfunction" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".permission.ui.PermissionTutotialRoutingActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppLockTransparent.Holo.GrayBg">
+            <intent-filter>
+                <action android:name="security.sunqi.normalfunction" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.KeepForegroundActivity"
             android:excludeFromRecents="true"

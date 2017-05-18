@@ -35,14 +35,6 @@
                     android:text="@string/cn_rank_protect_monitor_card_text1" />
 
                     <TextView
-                        android:id="@+id/rank_protect_monitor_card_text2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textSize="12sp"
-                        tools:text="实时监控系统漏洞及安全风险" />
-
-                    <TextView
                         android:id="@+id/rank_protect_monitor_card_text3"
                         style="@style/rank_protect_card_text2"
                         android:layout_marginTop="2dp"
@@ -50,17 +42,17 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/rank_protect_monitor_card_switch"
+                    android:id="@+id/level_protect_monitor_card_switch"
                     style="@style/rank_protect_card_btn_normal"
                     android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/rank_protect_monitor_card_switch_ok"
+                    android:id="@+id/level_monitor_card_switch_ok"
                     style="@style/rank_protect_card_btn_ok"
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/rank_protect_monitor_card_switch_not_ok"
+                    android:id="@+id/level_monitor_card_switch_not_ok"
                     style="@style/rank_protect_card_btn_not_ok"
                     android:visibility="visible" />
 
@@ -106,12 +98,12 @@
                     android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/rank_protect_antiharass_card_switch_ok"
+                    android:id="@+id/levle_antiharass_card_switch_ok"
                     style="@style/rank_protect_card_btn_ok"
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/rank_protect_antiharass_card_switch_not_ok"
+                    android:id="@+id/levle_antiharass_card_switch_not_ok"
                     style="@style/rank_protect_card_btn_not_ok"
                     android:visibility="visible" />
 
@@ -152,17 +144,17 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/rank_protect_applock_card_switch"
+                android:id="@+id/level_applock_card_switch"
                 style="@style/rank_protect_card_btn_normal"
                 android:visibility="invisible" />
 
             <ImageView
-                android:id="@+id/rank_protect_applock_card_switch_ok"
+                android:id="@+id/level_applock_card_switch_ok"
                 style="@style/rank_protect_card_btn_ok"
                 android:visibility="invisible" />
 
             <TextView
-                android:id="@+id/rank_protect_applock_card_switch_not_ok"
+                android:id="@+id/level_applock_card_switch_not_ok"
                 style="@style/rank_protect_card_btn_not_ok"
                 android:visibility="visible" />
 
@@ -215,14 +207,14 @@
         android:textSize="18sp" />
 
     <RelativeLayout
-        android:id="@+id/rank_protect_text_layout"
+        android:id="@+id/level_text_layout"
         android:layout_width="match_parent"
         android:layout_height="214dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="88dp">
 
         <TextView
-            android:id="@+id/rank_protect_main_title"
+            android:id="@+id/permission_level_main_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -236,7 +228,7 @@
             android:id="@+id/rank_protect_sub_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rank_protect_main_title"
+            android:layout_below="@id/permission_level_main_title"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:paddingBottom="10dp"
@@ -246,28 +238,6 @@
             tools:text="建议开启全部权限提升防护等级" />
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/rank_protect_main_title_checking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="424dp"
-        android:text="@string/cn_rank_protect_landing_checking"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-
-    <ImageView
-        android:id="@+id/rank_protect_landing_page_close"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="39dp"
-        android:src="@drawable/cn_rank_protect_landing_page_close" />
 
 </RelativeLayout>
 
