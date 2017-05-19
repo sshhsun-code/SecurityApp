@@ -12,22 +12,27 @@ import android.widget.TextView;
 
 import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.SecurityApplication;
+import com.example.sunqi.securityking.bean.VirusShowBean;
 import com.example.sunqi.securityking.customview.RadarScanView;
+import com.example.sunqi.securityking.dataprovider.VirusScanDataProcessor;
+import com.example.sunqi.securityking.xmlparser.PullParseService;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunqi on 2017/5/16.
  */
 
-public class ScanVirusActicity extends Activity {
+public class ScanVirusActicity extends Activity implements VirusScanDataProcessor.ScanListener{
 
     private ArrayList<String> apps = new ArrayList<>();
 
     private RadarScanView racarscanview;
     private TextView scan_state;
     private TextView app_name;
-    private Button start_scan;
 
     private Handler mhandler;
     private HandlerThread scanThread;
@@ -36,6 +41,8 @@ public class ScanVirusActicity extends Activity {
     private boolean isScanning = true;
 
     private static int index = 0;
+
+    private boolean hasVirusApp = false;
 
     private static final int SCAN_FINISHED = 1;
     private static final int SCANING = 2;
@@ -52,20 +59,36 @@ public class ScanVirusActicity extends Activity {
         racarscanview = (RadarScanView) findViewById(R.id.racarscanview);
         scan_state = (TextView) findViewById(R.id.scan_state);
         app_name = (TextView) findViewById(R.id.app_name);
-
     }
 
+    @Override
+    public void onDataFinished(List<VirusShowBean> virusShowBeanList) {
+        if (virusShowBeanList == null || virusShowBeanList.isEmpty()) {
+            hasVirusApp = false;
+        } else {
+            hasVirusApp = true;
+        }
+    }
 
     private void getToListActicity() {
         racarscanview.stopScan();
         app_name.setVisibility(View.GONE);
-        scan_state.setText(getString(R.string.scan_finished));
+        scan_state.setText(getString(hasVirusApp ? R.string.scan_finished_has_virus:R.string.scan_finished_no_virus));
+        scan_state.setTextColor(getResources().getColor(hasVirusApp ? R.color.cn_rank_protect_bg_red : R.color.safepay_app_startup_bg));
         mhandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                //到扫描结果页
+                if (hasVirusApp) {
+
+                }
             }
         },2000);
+        try {
+            InputStream inputStream = getAssets().open("virus.xml");
+            PullParseService.getVirusApps(inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initData() {

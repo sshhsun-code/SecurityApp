@@ -1,0 +1,16 @@
+<resources>
+    <VirusApp type = "2">
+        <pkgName>com.anquanweishi.zhuan</pkgName>
+        <appName>安全卫士</appName>
+    </VirusApp>
+
+    <VirusApp type = "1">
+        <pkgName>com.vlocker.locker</pkgName>
+        <appName>微锁屏</appName>
+    </VirusApp>
+
+    <VirusApp type = "2">
+        <pkgName>com.check.usage.sunqi.usagecheckdemo</pkgName>
+        <appName>UsageCheckDemo</appName>
+    </VirusApp>
+</resources>

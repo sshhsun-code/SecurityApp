@@ -24,9 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sunqi.securityking.R;
+import com.example.sunqi.securityking.dataprovider.MainUIDataProcess;
 import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.permission.PermissionManager;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+
+import static com.example.sunqi.securityking.dataprovider.MainUIDataProcess.getInternalMemory;
+import static com.example.sunqi.securityking.dataprovider.MainUIDataProcess.getStorge;
 
 public class MainActivity extends Activity implements View.OnClickListener{
     private DrawerLayout drawer_layout;
@@ -64,20 +68,18 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
         if (isShowing) {
-            startAnimator(56, 77);
+            startAnimator();
         }
     }
 
     /**
      * 主界面的指示图开始变化
-     * @param progress_1 存储空间百分比
-     * @param progress_2 内存百分比
      */
-    private void startAnimator(int progress_1, int progress_2) {
-        ObjectAnimator anim = ObjectAnimator.ofInt(arc_progress, "progress", 0, progress_1);
+    private void startAnimator() {
+        ObjectAnimator anim = ObjectAnimator.ofInt(arc_progress, "progress", 0, (int)(100 - getStorge() + 0.5));
         anim.setInterpolator(new DecelerateInterpolator());
         anim.setDuration(1500);
-        ObjectAnimator anim2 = ObjectAnimator.ofInt(arc_progress2, "progress", 0, progress_2);
+        ObjectAnimator anim2 = ObjectAnimator.ofInt(arc_progress2, "progress", 0, (int)(100 - getInternalMemory() + 0.5));
         anim2.setInterpolator(new DecelerateInterpolator());
         anim2.setDuration(1500);
         anim.start();
@@ -137,6 +139,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         level_layout.setOnClickListener(this);
         redpacket_layout.setOnClickListener(this);
         process_layout.setOnClickListener(this);
+        protect_days_num.setText(MainUIDataProcess.getInstallDays() +"");
     }
 
     private void initTitle() {
@@ -201,7 +204,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         @Override
         public void onDrawerClosed(View drawerView) {
             isShowing = true;
-            startAnimator(56, 77);
+            startAnimator();
+            getInternalMemory();
+            getStorge();
         }
 
         @Override
@@ -214,6 +219,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     private void refreshDrawer() {
         Constant.Level level = PermissionManager.getLevel();
+        protect_days_num.setText(MainUIDataProcess.getInstallDays() +"");
         if (level == Constant.Level.HIGH) {
             levelUP(true);
         } else {
