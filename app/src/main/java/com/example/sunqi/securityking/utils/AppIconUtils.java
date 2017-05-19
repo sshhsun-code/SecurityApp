@@ -49,4 +49,8 @@ public class AppIconUtils {
         }
         return drawableToBitamp(SecurityApplication.getInstance().getDrawable(R.drawable.default_icon));
     }
+
+    public static boolean isInstallApp(String pkgName) {
+        return appIcons.containsKey(pkgName);
+    }
 }

@@ -123,7 +123,9 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.normal_title_back:
-                finish();
+                if (scan_view.getVisibility() == View.GONE) {
+                    finish();
+                }
                 break;
         }
     }
@@ -210,6 +212,14 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
         } else {
             isScanning = false;
             mhandler.sendEmptyMessage(SCAN_FINISHED);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (scan_view.getVisibility() == View.GONE) {
+            finish();
         }
     }
 

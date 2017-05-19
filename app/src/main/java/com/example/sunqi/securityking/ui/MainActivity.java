@@ -105,6 +105,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
+                    case 0:
+                        Toast.makeText(mcontext,"进程加速",Toast.LENGTH_SHORT).show();
+                        Intent intent4 = new Intent(mcontext, ProcessActivity.class);
+                        mcontext.startActivity(intent4);
+                        break;
                     case 1:
                         Toast.makeText(mcontext,"防通知打扰",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(mcontext, NotifySettingActivity.class);
