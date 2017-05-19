@@ -24,6 +24,15 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
+    <style name="virus_card_layout_style">
+        <item name="android:background">@drawable/cn_rank_protect_card_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
     <style name="rank_protect_card_btn_normal">
         <item name="android:layout_width">57dp</item>
         <item name="android:layout_height">30dp</item>
@@ -51,7 +60,7 @@
         <item name="android:layout_marginRight">11dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:drawableLeft">@drawable/rank_protect_open_btn_not_ok_icon</item>
-        <item name="android:drawablePadding">5dp</item>
+        <item name="android:drawablePadding">1dp</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

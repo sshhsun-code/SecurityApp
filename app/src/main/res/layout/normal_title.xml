@@ -9,10 +9,10 @@
     <ImageView
         android:layout_marginTop="12dp"
         android:id="@+id/normal_title_back"
-        android:layout_width="26dp"
+        android:layout_width="32dp"
         android:paddingLeft="6dp"
         android:layout_height="26dp"
-        android:paddingRight="2dp"
+        android:paddingRight="8dp"
         android:src="@drawable/left_arrow"/>
     <TextView
         android:id="@+id/normal_title_text"
@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:text="@string/notificaion_manage"
         android:textColor="#fff"
-        android:layout_marginLeft="6dp"
         android:textSize="18sp"
         android:layout_toRightOf="@id/normal_title_back"/>
     <ImageView
