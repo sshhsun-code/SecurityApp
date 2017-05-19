@@ -17,6 +17,12 @@ public class VirusScanDataProcessor {
 
     private static ScanListener scanListener = null;
 
+    /**
+     * 算法：将安装的应用列表和本地的病毒列表进行匹配，将病毒App添加结果列表并返回
+     * @param installList 安装的应用列表
+     * @param virusAppList 本地的病毒列表
+     * @param manager PackageManager
+     */
     public static void requestVirusAppData(List<ResolveInfo> installList, List<VirusApp> virusAppList, PackageManager manager) {
         List<VirusShowBean> result = new ArrayList<>();
         VirusShowBean virusShowBean;
@@ -30,6 +36,7 @@ public class VirusScanDataProcessor {
                     virusShowBean.setPakName(installList.get(index).activityInfo.packageName);
                     virusShowBean.setAppIcon(installList.get(index).activityInfo.loadIcon(manager));
                     virusShowBean.setType(virusAppList.get(index2).getType());
+                    result.add(virusShowBean);
                     virusAppList.remove(index2);
                     break;
                 }

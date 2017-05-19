@@ -1,6 +1,8 @@
 package com.example.sunqi.securityking.ui;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.SecurityApplication;
+import com.example.sunqi.securityking.bean.VirusApp;
 import com.example.sunqi.securityking.bean.VirusShowBean;
 import com.example.sunqi.securityking.customview.RadarScanView;
 import com.example.sunqi.securityking.dataprovider.VirusScanDataProcessor;
@@ -22,6 +25,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.sunqi.securityking.R.drawable.manager;
+
 /**
  * Created by sunqi on 2017/5/16.
  */
@@ -29,6 +34,7 @@ import java.util.List;
 public class ScanVirusActicity extends Activity implements VirusScanDataProcessor.ScanListener{
 
     private ArrayList<String> apps = new ArrayList<>();
+    private List<VirusShowBean> mVirusShowBeanList = new ArrayList<>();
 
     private RadarScanView racarscanview;
     private TextView scan_state;
@@ -67,6 +73,7 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
             hasVirusApp = false;
         } else {
             hasVirusApp = true;
+            mVirusShowBeanList = virusShowBeanList;
         }
     }
 
@@ -93,6 +100,7 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
 
     private void initData() {
         apps = SecurityApplication.installApps;
+        VirusScanDataProcessor.setScanListener(this);
         mhandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -115,6 +123,7 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
             }
         };
     }
+
 
     private void checkForUpdate() {
         if (index < apps.size() - 1) {
@@ -144,6 +153,17 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
         //开始查询
         isScanning = true;
         scanHandler.sendEmptyMessage(MSG_UPDATE_INFO);
+        try {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.MAIN");
+            intent.addCategory("android.intent.category.LAUNCHER");
+            List<ResolveInfo> resolveInfolist = this.getPackageManager().queryIntentActivities(intent, 0);
+            InputStream inputStream = getAssets().open("virus.xml");
+            List<VirusApp> apps = PullParseService.getVirusApps(inputStream);
+            VirusScanDataProcessor.requestVirusAppData(resolveInfolist, apps, this.getPackageManager());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

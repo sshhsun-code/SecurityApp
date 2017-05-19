@@ -25,11 +25,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="#ff3a3a"
+                android:textColor="@color/cn_rank_protect_bg_blue"
                 android:textSize="18dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="后台管理"/>
+                android:text="保持后台运行"/>
 
             <ImageView
                 android:id="@+id/img_open"
