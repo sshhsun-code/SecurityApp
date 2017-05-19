@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.sunqi.securityking.SecurityApplication;
+import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.permission.PermissionGuideUtil;
 
 /**
@@ -99,6 +100,7 @@ public class PermissionTutotialRoutingActivity extends Activity{
 //            // 补刀逻辑
 ////            GuidePermissionSwitchChecker.getInstance().stopChecker();
 //        }
+        setFlag();
         finishSelf();
     }
 
@@ -151,6 +153,12 @@ public class PermissionTutotialRoutingActivity extends Activity{
         finish();
     }
 
+    private void setFlag() {
+        if (mTask == TASK_TO_GUIDE_AUTO_STRAT) {
+            GlobalPref.getInstance().setSecurityHasEnterAutostart(true);
+        }
+    }
+
     private void launchPermissionSettingTutorial(int task) {
         Intent intent;
         if(task == TASK_TO_GUIDE_NOTIFICATION_READ) {
@@ -160,8 +168,9 @@ public class PermissionTutotialRoutingActivity extends Activity{
             intent = new Intent(SecurityApplication.getInstance(), TutorialActivity.class);
             intent.putExtra(TutorialActivity.FROM, task);
         } else if (task == TASK_TO_GUIDE_AUTO_STRAT) {
-            intent = new Intent(SecurityApplication.getInstance(), TutorialActivity.class);
+            intent = new Intent(SecurityApplication.getInstance(), Flyme6AutoSetupPermissionTutorialActivity.class);
             intent.putExtra(TutorialActivity.FROM, task);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         } else {
             intent = null;
         }

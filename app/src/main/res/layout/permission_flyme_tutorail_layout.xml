@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/nipt_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/notification_interception_privilege_guide_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+            android:id="@+id/rv_get_down"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:background="#F8F8F8"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="14dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#ff3a3a"
+                android:textSize="18dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="后台管理"/>
+
+            <ImageView
+                android:id="@+id/img_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="21dp"
+                android:src="@drawable/permissions_open"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/white"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#3a3a3a"
+                android:textSize="18dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="24dp"
+                android:text="后台管理"/>
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:id="@+id/img_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/permissions_pack_up_arrow2"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_finger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/finger_normal"/>
+
+</RelativeLayout>

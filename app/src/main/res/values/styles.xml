@@ -37,8 +37,8 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
     <style name="rank_protect_card_btn_ok">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
         <item name="android:src">@drawable/rank_protect_open_btn_ok</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>

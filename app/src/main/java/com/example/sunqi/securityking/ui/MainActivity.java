@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,14 +24,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sunqi.securityking.R;
+import com.example.sunqi.securityking.global.Constant;
+import com.example.sunqi.securityking.permission.PermissionManager;
 import com.github.lzyzsd.circleprogress.ArcProgress;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends Activity implements View.OnClickListener{
     private DrawerLayout drawer_layout;
     private RelativeLayout right_drawer;
     private ImageView title_items;
+    private ImageView level_icon_bg;
     private GridView mian_gridView;
     private ArcProgress arc_progress;
     private ArcProgress arc_progress2;
@@ -121,6 +121,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 }
             }
         });
+        level_icon_bg = (ImageView) findViewById(R.id.level_icon_bg);
         defend_level_notice = (TextView) findViewById(R.id.defend_level_notice);
         protect_days_num = (TextView) findViewById(R.id.protect_days_num);
         defend_level_num = (TextView) findViewById(R.id.defend_level_num);
@@ -212,7 +213,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
     };
 
     private void refreshDrawer() {
+        Constant.Level level = PermissionManager.getLevel();
+        if (level == Constant.Level.HIGH) {
+            levelUP(true);
+        } else {
+            levelUP(false);
+        }
+    }
 
+    private void levelUP(boolean high) {
+        level_layout.setBackgroundResource(high ? R.color.cn_rank_protect_bg_blue : R.color.cn_rank_protect_bg_red);
+        level_icon_bg.setImageResource(high ? R.drawable.high : R.drawable.low);
+        defend_level_num.setText(high ? "极高" : "极低");
+        defend_level_notice.setText(high ? "你已获得完整的安全防护" : "你有未开权限待开启");
     }
 
     private void setStatusBarTranslate(){

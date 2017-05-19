@@ -33,6 +33,7 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
     private TextView  level_monitor_card_switch_not_ok;
     private TextView  level_applock_card_switch_not_ok;
     private TextView  levle_antiharass_card_switch_not_ok;
+    private TextView  levle_protect_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,6 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
         rank_protect_monitor_card = (RelativeLayout) findViewById(R.id.rank_protect_monitor_card);
         rank_protect_antiharass_card = (RelativeLayout) findViewById(R.id.rank_protect_antiharass_card);
         rank_protect_applock_card = (RelativeLayout) findViewById(R.id.rank_protect_applock_card);
-        rank_protect_applock_card.setOnClickListener(this);
-        rank_protect_antiharass_card.setOnClickListener(this);
-        rank_protect_monitor_card.setOnClickListener(this);
         permission_level_main_title = (TextView) findViewById(R.id.permission_level_main_title);
         level_applock_card_switch_ok = (ImageView) findViewById(R.id.level_applock_card_switch_ok);
         levle_antiharass_card_switch_ok = (ImageView) findViewById(R.id.levle_antiharass_card_switch_ok);
@@ -60,6 +58,11 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
         level_monitor_card_switch_not_ok = (TextView) findViewById(R.id.level_monitor_card_switch_not_ok);
         level_applock_card_switch_not_ok = (TextView) findViewById(R.id.level_applock_card_switch_not_ok);
         levle_antiharass_card_switch_not_ok = (TextView) findViewById(R.id.levle_antiharass_card_switch_not_ok);
+        levle_protect_back = (TextView) findViewById(R.id.levle_protect_back);
+        rank_protect_applock_card.setOnClickListener(this);
+        rank_protect_antiharass_card.setOnClickListener(this);
+        rank_protect_monitor_card.setOnClickListener(this);
+        levle_protect_back.setOnClickListener(this);
     }
 
     @Override
@@ -81,7 +84,7 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
 
 
     private int getBgColorId() {
-        return R.color.cn_rank_protect_bg_blue;
+        return R.color.notification_background_color_blue;
 //        Constant.ProtectLevel level = PermissionManager.getLevel();
 //        if (level == Constant.ProtectLevel.HIGH) {
 //            return R.color.cn_rank_protect_bg_blue;
@@ -110,10 +113,10 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
     }
 
     private void refreshTitle() {
-        Constant.ProtectLevel level = PermissionManager.getLevel();
-        if (level == Constant.ProtectLevel.HIGH) {
+        Constant.Level level = PermissionManager.getLevel();
+        if (level == Constant.Level.HIGH) {
             permission_level_main_title.setText("极高");
-        } else if (level == Constant.ProtectLevel.MID) {
+        } else if (level == Constant.Level.MID) {
             permission_level_main_title.setText("待提升");
         } else {
             permission_level_main_title.setText("极低");
@@ -144,6 +147,9 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
                     return;
                 }
                 PermissionManager.GuidePermission(PermissionTutotialRoutingActivity.TASK_TO_GUIDE_AUTO_STRAT);
+                break;
+            case R.id.levle_protect_back:
+                finish();
                 break;
         }
     }

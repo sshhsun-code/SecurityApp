@@ -25,7 +25,7 @@ public class Constant {
     }
 
     // 安全等级：低、中、高
-    public enum ProtectLevel{LOW, MID, HIGH}
+    public enum Level{LOW, MID, HIGH}
 
     // 权限
     public enum Permission {

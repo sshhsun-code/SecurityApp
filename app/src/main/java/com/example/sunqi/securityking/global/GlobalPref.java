@@ -87,4 +87,11 @@ public class GlobalPref {
         editor.commit();
     }
 
+    public void setSecurityHasEnterAutostart(boolean hasEnterAutostart) {
+        putBoolean(SECURITY_HAS_ENTER_AUTOSTART,hasEnterAutostart);
+    }
+
+    public boolean getSecurityHasEnterAutostart() {
+        return getBoolean(SECURITY_HAS_ENTER_AUTOSTART, false);
+    }
 }

@@ -37,16 +37,16 @@ public class PermissionManager {
                 result = !UsageStatsUtil.shouldShowPromoptForPermission();
                 break;
         }
-        return false;
+        return result;
     }
 
-    public static Constant.ProtectLevel getLevel() {
+    public static Constant.Level getLevel() {
         if(checkPermission(Constant.Permission.AUTO_SETUP)
                 && checkPermission(Constant.Permission.NOTIFICATION_READ)
                 && checkPermission(Constant.Permission.USAGE_STATS)) {
-            return Constant.ProtectLevel.HIGH;
+            return Constant.Level.HIGH;
         }
-        return Constant.ProtectLevel.LOW;
+        return Constant.Level.LOW;
     }
 
     public static void GuidePermission(int task) {
