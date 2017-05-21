@@ -4,6 +4,7 @@
     package="com.example.sunqi.securityking">
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
 
 
     <uses-permission

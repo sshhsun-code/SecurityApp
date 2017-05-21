@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingTop="8dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="8dp"
+    android:background="@drawable/navigtion_title_btn_bg"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:layout_margin="1dp"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/process_item_icon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/applock1"/>
+
+    <TextView
+        android:id="@+id/process_item_name"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/process_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/applock"/>
+
+    <TextView
+        android:id="@+id/process_item_size"
+        android:layout_marginLeft="220dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cn_rank_protect_bg_yellow"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="含有高危病毒"/>
+
+</RelativeLayout>

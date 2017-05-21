@@ -5,7 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include android:id="@+id/redpacket_top"
+    <include android:id="@+id/process_top"
         layout="@layout/normal_title"/>
 
+    <RelativeLayout
+        android:id="@+id/process_view"
+        android:layout_width="match_parent"
+        android:layout_below="@id/process_top"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+        <TextView
+            android:id="@+id/process_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="60dp"
+            android:paddingBottom="70dp"
+            android:gravity="center_horizontal"
+            android:background="@color/cn_rank_protect_bg_yellow"
+            android:text="关闭不需要的后台进程，提升运行流畅度"
+            android:textSize="17sp"
+            android:textColor="#fff"/>
+        <View
+            android:id="@+id/process_divider"
+            android:layout_below="@id/process_notice"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#bfbfbf"/>
+        <ListView
+            android:id="@+id/process_listview"
+            android:layout_marginTop="2px"
+            android:layout_below="@id/process_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="2px"
+            android:divider="#bfbfbf"/>
+    </RelativeLayout>
 </RelativeLayout>
