@@ -104,6 +104,7 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
 
 
     private void initData() {
+        mHandler = new Handler(getMainLooper());
         processAppData();
         is_swich_on = GlobalPref.getInstance(this).getBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, false);
         boolean isNotifyRead = isNotifyReadEnable();
@@ -164,17 +165,22 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.swich_button:
-                if (is_swich_on) {
-                    is_swich_on = false;
-                    top_list.setVisibility(View.VISIBLE);
-                    swich_button.setImageResource(R.drawable.switch_close);
-                } else {
-                    is_swich_on = true;
-                    top_list.setVisibility(View.GONE);
-                    swich_button.setImageResource(R.drawable.switch_open_1);
-                }
-
-                GlobalPref.getInstance().putBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, is_swich_on);
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (is_swich_on) {
+                            is_swich_on = false;
+                            top_list.setVisibility(View.VISIBLE);
+                            swich_button.setImageResource(R.drawable.switch_close);
+                        } else {
+                            is_swich_on = true;
+                            top_list.setVisibility(View.GONE);
+                            swich_button.setImageResource(R.drawable.switch_open_1);
+                        }
+                        GlobalPref.getInstance().putBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, is_swich_on);
+                        Toast.makeText(NotifySettingActivity.this, getNotice(is_swich_on), Toast.LENGTH_SHORT).show();
+                    }
+                },0);
                 break;
             case R.id.top_list:
 
@@ -183,6 +189,10 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                 finish();
                 break;
         }
+    }
+
+    private String getNotice(boolean is_swich_on) {
+        return is_swich_on ? "开启防通知打扰功能" : "关闭防通知打扰功能";
     }
 
     @Override
