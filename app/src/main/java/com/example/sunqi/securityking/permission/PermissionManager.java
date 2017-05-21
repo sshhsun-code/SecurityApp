@@ -25,7 +25,7 @@ public class PermissionManager {
     public static boolean checkPermission(Constant.Permission permission) {
         boolean result = true;
         switch (permission) {
-            case AUTO_SETUP:
+            case AUTO_START:
                 result = GlobalPref.getInstance().getBoolean(GlobalPref.SECURITY_HAS_ENTER_AUTOSTART, false);
                 break;
             case NOTIFICATION_READ:
@@ -41,7 +41,7 @@ public class PermissionManager {
     }
 
     public static Constant.Level getLevel() {
-        if(checkPermission(Constant.Permission.AUTO_SETUP)
+        if(checkPermission(Constant.Permission.AUTO_START)
                 && checkPermission(Constant.Permission.NOTIFICATION_READ)
                 && checkPermission(Constant.Permission.USAGE_STATS)) {
             return Constant.Level.HIGH;

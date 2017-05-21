@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.bean.NotifyData;
+import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.ui.RedpacketSettingActivity;
 import com.example.sunqi.securityking.utils.Commons;
 
@@ -35,13 +36,6 @@ public class RedPacketInterceptor {
 
     }
 
-    /**
-     * 若是红包消息，执行红包来的相关后续行为:
-     * 点亮屏幕，
-     *
-     * 注意： 这个是一个非常耗时的行为，必须非UI异步执行
-     * @param notifyData
-     */
     public synchronized void executeWebChatGroupRedPacketRecv(final NotifyData notifyData)
     {
 
@@ -56,12 +50,10 @@ public class RedPacketInterceptor {
 
         if (tryOpenRedpacketPage(notifyData)) {
 
-        }
-        else
-        {
+        } else {
             RedPacketBackgroundService.get().sendRedPacketSysNotify(notifyData);
         }
-
+        GlobalPref.getInstance().addSecurityNumRedpacket();//拦截到的红包总数进行更新
         RedpacketSettingActivity.sendRefreshBroadcast();
 
     }

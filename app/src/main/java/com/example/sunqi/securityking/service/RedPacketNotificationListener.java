@@ -6,6 +6,7 @@ import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
 
 import com.example.sunqi.securityking.bean.NotifyData;
+import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.utils.RedpacketAppsManager;
 
 /**
@@ -13,6 +14,8 @@ import com.example.sunqi.securityking.utils.RedpacketAppsManager;
  */
 
 public class RedPacketNotificationListener extends NotificationListener {
+
+    GlobalPref globalPref = GlobalPref.getInstance();
     @Override
     public void onCreate(NotificationMoniter service) {
         super.onCreate(service);
@@ -42,6 +45,10 @@ public class RedPacketNotificationListener extends NotificationListener {
 
     private void tryPostRedPacketMsg(StatusBarNotification notification) {
         try {
+
+            if (!globalPref.getSecuritySwitchWeixinRedpacket()) { //开关控制
+                return;
+            }
 
             if(filterPackage(notification))
             {

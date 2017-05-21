@@ -24,12 +24,22 @@ public class Constant {
         public static final String NOTIFY_DATA_URI = "content://notify.security.sunqi/data_notify";
     }
 
+    public static class Task{
+        public static final int TASK_TO_GUIDE_NOTIFICATION_READ = 10;
+        public static final int TASK_TO_GUIDE_APP_USAGE = 11;
+        public static final int TASK_TO_GUIDE_AUTO_STRAT = 12;
+    }
+
+    public static class PATH{
+        public static final String APKURL = "\thttp://fir.im/fn5j";
+    }
+
     // 安全等级：低、中、高
     public enum Level{LOW, MID, HIGH}
 
     // 权限
     public enum Permission {
-        AUTO_SETUP, // 自启动
+        AUTO_START, // 自启动
         NOTIFICATION_READ, // 通知读取
         USAGE_STATS, // 查看进程信息
     }

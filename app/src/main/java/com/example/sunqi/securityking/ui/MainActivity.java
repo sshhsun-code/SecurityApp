@@ -2,7 +2,9 @@ package com.example.sunqi.securityking.ui;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.dataprovider.MainUIDataProcess;
 import com.example.sunqi.securityking.global.Constant;
+import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.permission.PermissionManager;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
@@ -54,6 +57,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private int[] icons = {R.drawable.manager, R.drawable.notify, R.drawable.redpacket, R.drawable.bingdu};
     private Context mcontext;
     private boolean isShowing = true;
+    private GlobalPref globalPref = GlobalPref.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +71,34 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
+        checkAutoPermission();
         if (isShowing) {
             startAnimator();
+        }
+    }
+
+    private void checkAutoPermission() {
+        if (globalPref.getSecurityKeyIsFirstIn()) {
+            return;
+        }
+        if (!PermissionManager.checkPermission(Constant.Permission.AUTO_START)) { new AlertDialog.Builder(this)
+                .setMessage("自启动权限受限，请开启相应权限")
+                .setTitle("权限修复")
+                .setIconAttribute(android.R.attr.alertDialogIcon)
+                .setCancelable(true)
+                .setPositiveButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                PermissionManager.GuidePermission(Constant.Task.TASK_TO_GUIDE_AUTO_STRAT);
+                            }
+                        })
+                .setNegativeButton(android.R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // do nothing
+                            }
+                        })
+                .create().show();
         }
     }
 
@@ -145,6 +175,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
         redpacket_layout.setOnClickListener(this);
         process_layout.setOnClickListener(this);
         protect_days_num.setText(MainUIDataProcess.getInstallDays() +"");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (globalPref.getSecurityKeyIsFirstIn()) {
+            globalPref.setSecurityKeyIsFirstIn(false);
+        }
     }
 
     private void initTitle() {
@@ -269,6 +307,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (globalPref.getSecurityKeyIsFirstIn()) {
+            globalPref.setSecurityKeyIsFirstIn(false);
+        }
     }
 
 

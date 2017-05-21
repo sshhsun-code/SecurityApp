@@ -18,6 +18,12 @@ public class GlobalPref {
     public static final String SECURITY_KEY_SWITCH_REDPACKET = "key_switch_redpacket";
     public static final String SECURITY_KEY_IS_FIRST_IN = "key_is_first_in";
 
+
+    public static final String SECURITY_SWITCH_WEIXIN_REDPACKET = "key_switch_weixin_redpacket";
+    public static final String SECURITY_SWITCH_QQ_REDPACKET = "key_switch_qq_redpacket";
+    public static final String SECURITY_SWITCH_AUTOOPEN_REDPACKET = "key_switch_autoopen_redpacket";
+    public static final String SECURITY_NUM_REDPACKET = "key_num_redpacket";
+
     public static final String SECURITY_HAS_ENTER_AUTOSTART = "key_has_enter_auto_start";
 
     protected GlobalPref() {
@@ -85,6 +91,47 @@ public class GlobalPref {
     public void clear() {
         editor.clear();
         editor.commit();
+    }
+
+    public void setSecuritySwitchWeixinRedpacket(boolean hasEnterAutostart) {
+        putBoolean(SECURITY_SWITCH_WEIXIN_REDPACKET,hasEnterAutostart);
+    }
+
+    public boolean getSecuritySwitchWeixinRedpacket() {
+        return getBoolean(SECURITY_SWITCH_WEIXIN_REDPACKET, false);
+    }
+
+    public void setSecurityKeyIsFirstIn(boolean IsFirstIn) {
+        putBoolean(SECURITY_KEY_IS_FIRST_IN,IsFirstIn);
+    }
+
+    public boolean getSecurityKeyIsFirstIn() {
+        return getBoolean(SECURITY_KEY_IS_FIRST_IN, true);
+    }
+
+    public void setSecuritySwitchAutoopenRedpacket(boolean hasEnterAutostart) {
+        putBoolean(SECURITY_SWITCH_AUTOOPEN_REDPACKET,hasEnterAutostart);
+    }
+
+    public boolean getSecuritySwitchAutoopenRedpacket() {
+        return getBoolean(SECURITY_SWITCH_AUTOOPEN_REDPACKET, false);
+    }
+
+    public void setSecuritySwitchQqRedpacket(boolean hasEnterAutostart) {
+        putBoolean(SECURITY_SWITCH_QQ_REDPACKET,hasEnterAutostart);
+    }
+
+    public boolean getSecuritySwitchQqRedpacket() {
+        return getBoolean(SECURITY_SWITCH_QQ_REDPACKET, false);
+    }
+
+    public void addSecurityNumRedpacket() {
+        int num = getInteger(SECURITY_NUM_REDPACKET, 0);
+        putInteger(SECURITY_NUM_REDPACKET,num + 1);
+    }
+
+    public int getSecurityNumRedpacket() {
+        return getInteger(SECURITY_NUM_REDPACKET, 0);
     }
 
     public void setSecurityHasEnterAutostart(boolean hasEnterAutostart) {

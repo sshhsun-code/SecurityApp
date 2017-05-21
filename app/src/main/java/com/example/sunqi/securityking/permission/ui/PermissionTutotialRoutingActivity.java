@@ -10,12 +10,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.sunqi.securityking.SecurityApplication;
+import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.permission.PermissionGuideUtil;
 
@@ -28,9 +28,9 @@ public class PermissionTutotialRoutingActivity extends Activity{
     public static final String TASK = "task";
     public static final String EXTRA_ACTION = "action";
     public static final String ACTION_KILL_GUIDE_TUTORIAL_BASE_ACTIVITY_TASK = "killself";
-    public static final int TASK_TO_GUIDE_NOTIFICATION_READ = 10;
-    public static final int TASK_TO_GUIDE_APP_USAGE = 11;
-    public static final int TASK_TO_GUIDE_AUTO_STRAT = 12;
+    public static final int TASK_TO_GUIDE_NOTIFICATION_READ = Constant.Task.TASK_TO_GUIDE_NOTIFICATION_READ;
+    public static final int TASK_TO_GUIDE_APP_USAGE = Constant.Task.TASK_TO_GUIDE_APP_USAGE;
+    public static final int TASK_TO_GUIDE_AUTO_STRAT = Constant.Task.TASK_TO_GUIDE_AUTO_STRAT;
     private static final int SHOW_TUTORIAL_ACTIVITY = 1;
     private int mTask = 0;
     private Handler mHandler = new Handler(Looper.getMainLooper()) {

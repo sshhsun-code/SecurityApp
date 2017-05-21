@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/normal_title"/>
+    <include android:id="@+id/notify_top"
+        layout="@layout/normal_title"/>
 
     <RelativeLayout
         android:id="@+id/swich_layout"
         android:layout_width="match_parent"
-        android:background="@color/safeclass_default_bg"
+        android:background="#fff"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp">
         <TextView
@@ -34,11 +35,15 @@
             android:id="@+id/swich_button"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/switch_off_1"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/switch_close_1"
+            android:layout_height="20dp"/>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="#8a8a8a"/>
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -41,7 +41,7 @@ public class MainUIDataProcess {
         long install = getInstallTime(SecurityApplication.getInstance());
         long now = System.currentTimeMillis();
         int days =  (int)((now - install) / (1000 * 60 * 60 * 24));
-        return days < 1 ? 1 : days;
+        return days + 1;
     }
 
     @SuppressLint("NewApi") // SDK >= 9

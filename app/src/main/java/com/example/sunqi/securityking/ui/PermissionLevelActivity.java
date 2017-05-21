@@ -97,7 +97,7 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
 
 
     private void refreshCard() {
-        refreshCardView(level_monitor_card_switch_ok, level_monitor_card_switch_not_ok,PermissionManager.checkPermission(Constant.Permission.AUTO_SETUP));
+        refreshCardView(level_monitor_card_switch_ok, level_monitor_card_switch_not_ok,PermissionManager.checkPermission(Constant.Permission.AUTO_START));
         refreshCardView(levle_antiharass_card_switch_ok, levle_antiharass_card_switch_not_ok,PermissionManager.checkPermission(Constant.Permission.NOTIFICATION_READ));
         refreshCardView(level_applock_card_switch_ok, level_applock_card_switch_not_ok,PermissionManager.checkPermission(Constant.Permission.USAGE_STATS));
     }
@@ -143,7 +143,7 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
                 PermissionManager.GuidePermission(PermissionTutotialRoutingActivity.TASK_TO_GUIDE_NOTIFICATION_READ);
                 break;
             case R.id.rank_protect_monitor_card:
-                if (PermissionManager.checkPermission(Constant.Permission.AUTO_SETUP)) {
+                if (PermissionManager.checkPermission(Constant.Permission.AUTO_START)) {
                     return;
                 }
                 PermissionManager.GuidePermission(PermissionTutotialRoutingActivity.TASK_TO_GUIDE_AUTO_STRAT);

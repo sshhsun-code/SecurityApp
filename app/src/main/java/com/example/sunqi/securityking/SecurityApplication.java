@@ -21,6 +21,7 @@ public class SecurityApplication extends Application {
     private static final String  NOTIFY_SETTING = "notify_setting";
     public static ArrayList<String> installApps = new ArrayList<>();
     private static PackageManager manager;
+//    private GlobalPref globalPref = GlobalPref.getInstance();
 
     @Override
     public void onCreate() {

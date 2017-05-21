@@ -30,6 +30,7 @@ import com.example.sunqi.securityking.bean.NotifyAppInfo;
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.global.GlobalPref;
+import com.example.sunqi.securityking.permission.PermissionManager;
 import com.example.sunqi.securityking.service.NotificationMoniter;
 import com.example.sunqi.securityking.utils.NotifyServiceUtil;
 
@@ -49,7 +50,9 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
     private ImageView swich_button;
     private boolean is_swich_on = false;
 
-
+    private View notify_top;
+    private ImageView normal_title_back;
+    private ImageView title_items;
 
     private static final String ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners";
     private static final String ACTION_NOTIFICATION_LISTENER_SETTINGS = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
@@ -79,19 +82,22 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
     }
 
     private void initView() {
+        notify_top = findViewById(R.id.notify_top);
+        normal_title_back = (ImageView) notify_top.findViewById(R.id.normal_title_back);
+        normal_title_back.setOnClickListener(this);
+        title_items = (ImageView) notify_top.findViewById(R.id.title_items);
+        title_items.setVisibility(View.GONE);
         top_list = findViewById(R.id.top_list);
         top_list.setVisibility(is_swich_on ? View.GONE : View.VISIBLE);
-        top_list.setOnClickListener(this);
         swich_button = (ImageView) findViewById(R.id.swich_button);
-        swich_button.setImageResource(is_swich_on ? R.drawable.switch_on_2 : R.drawable.switch_off_1);
+        swich_button.setImageResource(is_swich_on ? R.drawable.switch_open_1 : R.drawable.switch_close);
         swich_button.setOnClickListener(this);
         mListView = (ListView) findViewById(R.id.app_list);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(NotifySettingActivity.this,baseAppInfos.get(i).getPakName(),Toast.LENGTH_SHORT);
-//                baseAppInfos.get(i).setAppState(Constant.State.NOTIFY_SHOW);
-//                mAdapter.notifyDataSetChanged();
+
             }
         });
     }
@@ -126,7 +132,7 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                openNotificationAccess();
+                                PermissionManager.GuidePermission(Constant.Task.TASK_TO_GUIDE_NOTIFICATION_READ);
                             }
                         })
                 .setNegativeButton(android.R.string.cancel,
@@ -136,11 +142,6 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                             }
                         })
                 .create().show();
-    }
-
-
-    private void openNotificationAccess() {
-        startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
     }
 
     private void processAppData() {
@@ -166,17 +167,20 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                 if (is_swich_on) {
                     is_swich_on = false;
                     top_list.setVisibility(View.VISIBLE);
-                    swich_button.setImageResource(R.drawable.switch_off);
+                    swich_button.setImageResource(R.drawable.switch_close);
                 } else {
                     is_swich_on = true;
                     top_list.setVisibility(View.GONE);
-                    swich_button.setImageResource(R.drawable.switch_on_1);
+                    swich_button.setImageResource(R.drawable.switch_open_1);
                 }
 
                 GlobalPref.getInstance().putBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, is_swich_on);
                 break;
             case R.id.top_list:
 
+                break;
+            case R.id.normal_title_back:
+                finish();
                 break;
         }
     }
@@ -269,6 +273,9 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
             convertView.findViewById(R.id.app_switch).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!is_swich_on) {
+                        return;
+                    }
                     if (info.getAppState() != Constant.State.NOTIFY_SHOW) {
                         info.setAppState(Constant.State.NOTIFY_SHOW);
                         notifyDataSetChanged();

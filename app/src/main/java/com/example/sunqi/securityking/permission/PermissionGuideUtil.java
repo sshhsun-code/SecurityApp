@@ -1,10 +1,8 @@
 package com.example.sunqi.securityking.permission;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.provider.Settings;
 
 import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.global.Constant;
@@ -21,7 +19,7 @@ public class PermissionGuideUtil {
 
     public static void openSinglePermission(Constant.Permission permission) {
         switch (permission) {
-            case AUTO_SETUP:
+            case AUTO_START:
 
                 break;
             case NOTIFICATION_READ:
