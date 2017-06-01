@@ -48,6 +48,9 @@ public class VirusScanDataProcessor {
                 break;
             }
         }
+        if (scanListener != null) {
+            scanListener.onDataFinished(result);
+        }
     }
 
     public static void setScanListener(ScanListener mScanListener) {

@@ -48,6 +48,7 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
     private TextView scan_state;
     private TextView app_name;
     private TextView normal_title_text;
+    private TextView result_notice;
     private View scan_title;
     private RelativeLayout scan_view;
     private RelativeLayout result_view;
@@ -99,6 +100,7 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
         scan_view.setVisibility(View.VISIBLE);
         result_view = (RelativeLayout) findViewById(R.id.result_view);
         result_view.setVisibility(View.GONE);
+        result_notice = (TextView) result_view.findViewById(R.id.result_notice);
         scan_title.setBackgroundResource(R.color.cn_rank_protect_bg_blue);
         normal_title_back = (ImageView) scan_title.findViewById(R.id.normal_title_back);
         normal_title_back.setOnClickListener(this);
@@ -113,9 +115,19 @@ public class ScanVirusActicity extends Activity implements VirusScanDataProcesso
     public void onDataFinished(List<VirusShowBean> virusShowBeanList) {
         if (virusShowBeanList == null || virusShowBeanList.isEmpty()) {
             hasVirusApp = false;
+            mVirusShowBeanList.clear();
         } else {
             hasVirusApp = true;
             mVirusShowBeanList = virusShowBeanList;
+        }
+
+        if (scan_view.getVisibility() != View.VISIBLE) {
+            adapter.notifyDataSetChanged();
+            if (mVirusShowBeanList.size() == 0 || !hasVirusApp) {
+                scan_title.setBackgroundResource(R.color.safepay_default_bg);
+                result_notice.setBackgroundResource(R.color.safepay_default_bg);
+                result_notice.setText("危险应用清理完毕");
+            }
         }
     }
 

@@ -13,4 +13,9 @@
         <pkgName>com.check.usage.sunqi.usagecheckdemo</pkgName>
         <appName>UsageCheckDemo</appName>
     </VirusApp>
+
+    <VirusApp type = "1">
+        <pkgName>com.zkk.lottietest</pkgName>
+        <appName>LottieTest</appName>
+    </VirusApp>
 </resources>
