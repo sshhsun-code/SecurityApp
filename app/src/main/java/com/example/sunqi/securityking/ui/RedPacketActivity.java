@@ -66,7 +66,7 @@ public class RedPacketActivity extends Activity implements View.OnClickListener{
         normal_title_text = (TextView) includeView.findViewById(R.id.normal_title_text);
         normal_title_text.setText(getString(R.string.repacket_notify));
         record_count = (TextView) findViewById(R.id.record_count);
-        record_count.setText(globalPref.getSecurityNumRedpacket());
+        record_count.setText(globalPref.getSecurityNumRedpacket()+"");
         redpacket_permission = (TextView) findViewById(R.id.redpacket_permission);
         weixin_switch = (ImageView) findViewById(R.id.weixin_switch);
         weixin_switch.setImageResource(globalPref.getSecuritySwitchWeixinRedpacket() ? R.drawable.switch_open : R.drawable.switch_close);
