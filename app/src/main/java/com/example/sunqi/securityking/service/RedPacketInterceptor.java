@@ -2,6 +2,7 @@ package com.example.sunqi.securityking.service;
 
 import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.AudioManager;
@@ -56,9 +57,34 @@ public class RedPacketInterceptor {
         } else {
             RedPacketBackgroundService.get().sendRedPacketSysNotify(notifyData);
         }
-        GlobalPref.getInstance().addSecurityNumRedpacket();//拦截到的红包总数进行更新
+//        GlobalPref.getInstance().addSecurityNumRedpacket();//拦截到的红包总数进行更新
+        updateSecurityNumRedpacket();
         RedpacketSettingActivity.sendRefreshBroadcast();
 
+    }
+
+    private void updateSecurityNumRedpacket() {
+        int num = getWeixinRedpacketNum();
+        savaContentPrvd(GlobalPref.SECURITY_NUM_REDPACKET,(num + 1) + "",int.class.getSimpleName());
+    }
+
+    private int getWeixinRedpacketNum() {
+        ContentResolver resolver = SecurityApplication.getInstance().getContentResolver();
+        Cursor cursor = resolver.query(ASpProvider.Content_URL,null,GlobalPref.SECURITY_NUM_REDPACKET,null,null,null);
+        if (cursor == null) {
+            return 0;
+        } else {
+            cursor.moveToFirst();
+            String result = cursor.getString(cursor.getColumnIndex("value"));
+            return Integer.parseInt(result);
+        }
+    }
+
+    private void savaContentPrvd(String key,String value,String type){
+        ContentValues values=new ContentValues();
+        values.put("key", key);
+        values.put("value", value);
+        SecurityApplication.getInstance().getContentResolver().update(ASpProvider.Content_URL, values, type, null);
     }
 
     /**

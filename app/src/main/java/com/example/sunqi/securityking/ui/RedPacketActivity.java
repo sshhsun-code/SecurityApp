@@ -1,8 +1,10 @@
 package com.example.sunqi.securityking.ui;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.SecurityApplication;
+import com.example.sunqi.securityking.dataprovider.ASpProvider;
 import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.permission.PermissionManager;
@@ -66,7 +69,7 @@ public class RedPacketActivity extends Activity implements View.OnClickListener{
         normal_title_text = (TextView) includeView.findViewById(R.id.normal_title_text);
         normal_title_text.setText(getString(R.string.repacket_notify));
         record_count = (TextView) findViewById(R.id.record_count);
-        record_count.setText(globalPref.getSecurityNumRedpacket()+"");
+        record_count.setText(getWeixinRedpacketNum()+"");
         redpacket_permission = (TextView) findViewById(R.id.redpacket_permission);
         weixin_switch = (ImageView) findViewById(R.id.weixin_switch);
         weixin_switch.setImageResource(globalPref.getSecuritySwitchWeixinRedpacket() ? R.drawable.switch_open : R.drawable.switch_close);
@@ -80,6 +83,18 @@ public class RedPacketActivity extends Activity implements View.OnClickListener{
         weixin_switch.setOnClickListener(this);
         qq_switch.setOnClickListener(this);
         auto_switch.setOnClickListener(this);
+    }
+
+    private int getWeixinRedpacketNum() {
+        ContentResolver resolver = SecurityApplication.getInstance().getContentResolver();
+        Cursor cursor = resolver.query(ASpProvider.Content_URL,null,GlobalPref.SECURITY_NUM_REDPACKET,null,null,null);
+        if (cursor == null) {
+            return 0;
+        } else {
+            cursor.moveToFirst();
+            String result = cursor.getString(cursor.getColumnIndex("value"));
+            return Integer.parseInt(result);
+        }
     }
 
     @Override
