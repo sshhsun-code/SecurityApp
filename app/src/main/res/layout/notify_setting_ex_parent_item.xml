@@ -28,6 +28,7 @@
         android:textSize="18sp"
         android:text="@string/applock"/>
 
+
     <ImageView
         android:id="@+id/app_switch"
         android:layout_width="wrap_content"
@@ -38,5 +39,19 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
         android:background="@drawable/switch_off"/>
+
+    <TextView
+        android:id="@+id/app_item_notice"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@id/app_switch"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:textColor="#0d7dfa"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginRight="10dp"
+        android:text="应用白名单"/>
+
 
 </RelativeLayout>

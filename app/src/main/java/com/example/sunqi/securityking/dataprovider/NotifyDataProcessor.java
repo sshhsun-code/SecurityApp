@@ -87,6 +87,7 @@ public class NotifyDataProcessor {
         while (cursor.moveToNext()) {
             Log.e("package",cursor.getString(cursor.getColumnIndex("packname")));
         }
+        Log.e("package","=============================================");
         cursor.close();
     }
 

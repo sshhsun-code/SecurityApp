@@ -7,6 +7,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.sunqi.securityking.db.AppDataBaseHelper;
 
@@ -70,6 +71,7 @@ public class MyContentProvider extends ContentProvider {
         } else if (code == APP_LOCK){
             id = helper.getWritableDatabase().insert("app_lock", null, values);
         }
+        Log.e("insert","id:"+id);
         return ContentUris.withAppendedId(uri, id);
     }
 

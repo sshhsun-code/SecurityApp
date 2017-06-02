@@ -281,6 +281,7 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
             if (info != null) {
                 (convertView.findViewById(R.id.app_item_icon)).setBackgroundDrawable(info.getAppIcon());
                 (convertView.findViewById(R.id.app_switch)).setBackgroundDrawable(info.getAppState() == Constant.State.NOTIFY_MANAGE ?getDrawable(R.drawable.switch_off):getDrawable(R.drawable.switch_on_1));
+                (convertView.findViewById(R.id.app_item_notice)).setVisibility(info.getAppState() == Constant.State.NOTIFY_MANAGE ?View.GONE:View.VISIBLE);
                 ((TextView)convertView.findViewById(R.id.app_item_text)).setText(info.getAppName());
             }
             convertView.findViewById(R.id.app_switch).setOnClickListener(new View.OnClickListener() {
