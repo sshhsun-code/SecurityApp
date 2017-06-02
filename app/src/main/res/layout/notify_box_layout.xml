@@ -19,10 +19,12 @@
             android:layout_marginLeft="10dp"
             android:src="@mipmap/notificaiton"/>
         <TextView
+            android:id="@+id/notify_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="共拦截20条通知"
             android:layout_centerVertical="true"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
             android:textColor="#fff"/>

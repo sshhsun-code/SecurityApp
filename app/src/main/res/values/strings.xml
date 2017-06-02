@@ -7,8 +7,8 @@
     <string name="swich_notificaion_manage">开启防通知打扰</string>
     <string name="swich_notificaion_manage_guide">只保留重要通知，防止通知频繁打扰</string>
     <string name="notify_title">通知标题</string>
-    <string name="notify_content">通知内容1234567890</string>
-    <string name="notify_when">2017年5月8号</string>
+    <string name="notify_content">通知内容1234567890通知内容1234567890通知内容1234567890通知内容1234567890</string>
+    <string name="notify_time">2017年5月8号</string>
     <string name="scaning">正在扫描 :</string>
     <string name="scan_finished">扫描完成 !</string>
     <string name="scan_finished_no_virus">扫描完成 ，没有发现病毒哦~</string>

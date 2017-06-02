@@ -46,6 +46,7 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
     private ListView mNotifyListView;
     private ImageView setting;
     private Button cancel_all;
+    private TextView notify_num;
     NorifyDataObserver norifyDataObserver;
 
 
@@ -61,7 +62,15 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
 
     private void initView() {
         cancel_all = (Button) findViewById(R.id.cancel_all);
+        notify_num = (TextView) findViewById(R.id.notify_num);
         mNotifyListView = (ListView) findViewById(R.id.notify_list);
+        if (datalist.isEmpty()) {
+            notify_num.setText("暂无通知");
+            cancel_all.setVisibility(View.GONE);
+        } else {
+            notify_num.setText("共拦截"+datalist.size() +"条通知");
+            cancel_all.setVisibility(View.VISIBLE);
+        }
         if (!datalist.isEmpty()) {
             mAdapter = new NotifyAdapter(datalist ,mcontext);
             mNotifyListView.setAdapter(mAdapter);
@@ -73,6 +82,11 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
                 NotificationInfoProcessor.removeNotifyData(data); //从数据库中删除
                 datalist.remove(position);
                 mAdapter.notifyDataSetChanged();
+                if (datalist.isEmpty()) {
+                    notify_num.setText("暂无通知");
+                } else {
+                    notify_num.setText("共拦截"+datalist.size() +"条通知");
+                }
                 handleIntent(data);
             }
         });
@@ -82,6 +96,13 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
     @Override
     public void onDataFinished(ArrayList<NotifyData> Datalist) {
         datalist = Datalist;
+        if (datalist.isEmpty()) {
+            notify_num.setText("暂无通知");
+            cancel_all.setVisibility(View.GONE);
+        } else {
+            notify_num.setText("共拦截"+datalist.size() +"条通知");
+            cancel_all.setVisibility(View.VISIBLE);
+        }
         mAdapter = new NotifyAdapter(datalist ,mcontext);
         mNotifyListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
@@ -145,11 +166,13 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.title_items:
-
+                Intent intent = new Intent(NotificationBoxActivity.this, NotifySettingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
 
             case R.id.normal_title_back:
-
+                finish();
                 break;
 
             case R.id.cancel_all:
@@ -159,6 +182,11 @@ public class NotificationBoxActivity extends Activity implements View.OnClickLis
                 NotificationInfoProcessor.removeAllNotifyData();
                 datalist.clear();
                 mAdapter.notifyDataSetChanged();
+                if (datalist.isEmpty()) {
+                    notify_num.setText("暂无通知");
+                } else {
+                    notify_num.setText("共拦截"+datalist.size() +"条通知");
+                }
                 break;
         }
     }
