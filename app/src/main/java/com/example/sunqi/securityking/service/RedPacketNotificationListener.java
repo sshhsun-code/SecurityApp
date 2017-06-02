@@ -1,11 +1,15 @@
 package com.example.sunqi.securityking.service;
 
 import android.app.Notification;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
 
+import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.bean.NotifyData;
+import com.example.sunqi.securityking.dataprovider.ASpProvider;
 import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.utils.RedpacketAppsManager;
 
@@ -45,8 +49,8 @@ public class RedPacketNotificationListener extends NotificationListener {
 
     private void tryPostRedPacketMsg(StatusBarNotification notification) {
         try {
-
-            if (!globalPref.getSecuritySwitchWeixinRedpacket()) { //开关控制
+            RedPacketInterceptor.getAutoOpenSwitch();
+            if (!getWeixinRedpacketSwitch()) { //开关控制
                 return;
             }
 
@@ -92,5 +96,17 @@ public class RedPacketNotificationListener extends NotificationListener {
         }
 
         return false;
+    }
+
+    private boolean getWeixinRedpacketSwitch() {
+        ContentResolver resolver = SecurityApplication.getInstance().getContentResolver();
+        Cursor cursor = resolver.query(ASpProvider.Content_URL,null,GlobalPref.SECURITY_SWITCH_WEIXIN_REDPACKET,null,null,null);
+        if (cursor == null) {
+            return false;
+        } else {
+            cursor.moveToFirst();
+            String result = cursor.getString(cursor.getColumnIndex("value"));
+            return Boolean.parseBoolean(result);
+        }
     }
 }

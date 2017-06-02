@@ -1,9 +1,11 @@
 package com.example.sunqi.securityking.global;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.sunqi.securityking.SecurityApplication;
+import com.example.sunqi.securityking.dataprovider.ASpProvider;
 
 /**
  * Created by sshunsun on 2017/5/6.
@@ -95,6 +97,14 @@ public class GlobalPref {
 
     public void setSecuritySwitchWeixinRedpacket(boolean hasEnterAutostart) {
         putBoolean(SECURITY_SWITCH_WEIXIN_REDPACKET,hasEnterAutostart);
+        savaContentPrvd(SECURITY_SWITCH_WEIXIN_REDPACKET,hasEnterAutostart+"",Boolean.class.getSimpleName());
+    }
+
+    private void savaContentPrvd(String key,String value,String type){
+        ContentValues values=new ContentValues();
+        values.put("key", key);
+        values.put("value", value);
+        SecurityApplication.getInstance().getContentResolver().update(ASpProvider.Content_URL, values, type, null);
     }
 
     public boolean getSecuritySwitchWeixinRedpacket() {
@@ -111,6 +121,7 @@ public class GlobalPref {
 
     public void setSecuritySwitchAutoopenRedpacket(boolean hasEnterAutostart) {
         putBoolean(SECURITY_SWITCH_AUTOOPEN_REDPACKET,hasEnterAutostart);
+        savaContentPrvd(SECURITY_SWITCH_AUTOOPEN_REDPACKET,hasEnterAutostart+"",Boolean.class.getSimpleName());
     }
 
     public boolean getSecuritySwitchAutoopenRedpacket() {

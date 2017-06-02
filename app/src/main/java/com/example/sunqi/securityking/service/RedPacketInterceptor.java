@@ -1,12 +1,15 @@
 package com.example.sunqi.securityking.service;
 
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.util.Log;
 
 import com.example.sunqi.securityking.SecurityApplication;
 import com.example.sunqi.securityking.bean.NotifyData;
+import com.example.sunqi.securityking.dataprovider.ASpProvider;
 import com.example.sunqi.securityking.global.GlobalPref;
 import com.example.sunqi.securityking.ui.RedpacketSettingActivity;
 import com.example.sunqi.securityking.utils.Commons;
@@ -65,31 +68,16 @@ public class RedPacketInterceptor {
      */
     private boolean tryOpenRedpacketPage(NotifyData notifyData)
     {
-//        if(!RedpacketSettingManager.getInstance().isFastObtain()) {
-//            return false;
-//        }
-//
-//        // 横屏状态下，不自动打开应用
-//        if (DimenUtils.isOrientationLandscape(MobileDubaApplication.getInstance())) {
-//            return false;
-//        }
-//
-//        //锁屏状态下，不自动打开微信
-//        if(RedPacketBackgroundService.get().isInKeyguard())
-//        {
-//            DebugMode.Log(TAG, "Not Open wechat Now into keyguard!! ");
-//            return false;
-//        }
-
         return doOpenRedpacketPage(notifyData);
-
     }
 
     private boolean doOpenRedpacketPage(NotifyData notifyData) {
         try{
             //成功执行跳转微信，系统默认就会清空通知栏里面的通知信息。（消息不进入通知面板）
             PendingIntent intent = notifyData.getPendingIntent();
-            intent.send();
+            if (getAutoOpenSwitch()) {
+                intent.send();
+            }
 
             //收回系统的通知面板；
             Commons.collapseNotificationsPanel(SecurityApplication.getInstance());
@@ -105,6 +93,18 @@ public class RedPacketInterceptor {
         }
 
         return false;
+    }
+
+    public static boolean getAutoOpenSwitch() {
+        ContentResolver resolver = SecurityApplication.getInstance().getContentResolver();
+        Cursor cursor = resolver.query(ASpProvider.Content_URL,null,GlobalPref.SECURITY_SWITCH_AUTOOPEN_REDPACKET,null,null,null);
+        if (cursor == null) {
+            return false;
+        } else {
+            cursor.moveToFirst();
+            String result = cursor.getString(cursor.getColumnIndex("value"));
+            return Boolean.parseBoolean(result);
+        }
     }
 
     private void handlePlayTips() {

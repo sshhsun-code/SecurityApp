@@ -143,9 +143,9 @@ public class NotificationMoniter extends NotificationListenerService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, NotificationBoxActivity.class), 0);
         NotificationManager manager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
         NotificationCompat.Builder ncBuilder = new NotificationCompat.Builder(this);
-        ncBuilder.setContentTitle("My Notification");
-        ncBuilder.setContentText("Notification Listener Service Example");
-        ncBuilder.setTicker("Notification Listener Service Example");
+        ncBuilder.setContentTitle("安全卫士");
+        ncBuilder.setContentText("通知收纳盒，点击查看拦截的通知");
+        ncBuilder.setTicker("通知收纳盒，点击查看拦截的通知");
         ncBuilder.setSmallIcon(R.mipmap.ic_launcher);
         ncBuilder.setAutoCancel(false);
         ncBuilder.setContentIntent(pendingIntent);

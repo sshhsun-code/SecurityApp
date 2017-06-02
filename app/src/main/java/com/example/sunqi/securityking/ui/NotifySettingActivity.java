@@ -3,6 +3,7 @@ package com.example.sunqi.securityking.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.sunqi.securityking.R;
 import com.example.sunqi.securityking.bean.NotifyAppInfo;
+import com.example.sunqi.securityking.dataprovider.ASpProvider;
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.Constant;
 import com.example.sunqi.securityking.global.GlobalPref;
@@ -178,6 +180,7 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
                             swich_button.setImageResource(R.drawable.switch_open_1);
                         }
                         GlobalPref.getInstance().putBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, is_swich_on);
+                        savaContentPrvd(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY,is_swich_on+"",Boolean.class.getSimpleName());
                         Toast.makeText(NotifySettingActivity.this, getNotice(is_swich_on), Toast.LENGTH_SHORT).show();
                     }
                 },0);
@@ -299,5 +302,13 @@ public class NotifySettingActivity extends Activity implements View.OnClickListe
             });
             return convertView;
         }
+    }
+
+
+    private void savaContentPrvd(String key,String value,String type){
+        ContentValues values=new ContentValues();
+        values.put("key", key);
+        values.put("value", value);
+        getContentResolver().update(ASpProvider.Content_URL, values, type, null);
     }
 }

@@ -1,9 +1,13 @@
 package com.example.sunqi.securityking.service;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.service.notification.StatusBarNotification;
 
+import com.example.sunqi.securityking.SecurityApplication;
+import com.example.sunqi.securityking.dataprovider.ASpProvider;
 import com.example.sunqi.securityking.dataprovider.NotifyDataProcessor;
 import com.example.sunqi.securityking.global.GlobalPref;
 
@@ -45,14 +49,26 @@ public class NotificationInterceptListener extends NotificationListener {
     }
 
     private boolean isShouldNotify(StatusBarNotification notification) {
-        if (!GlobalPref.getInstance().getBoolean(GlobalPref.SECURITY_KEY_SWITCH_NOTIFY, false)) {
+        if (!getNotifySpSwitch()) {
             return false;
         }
 
-//        if(NotificationMoniter.isWhiteApp(notification.getPackageName())) {
-//            return false;
-//        }
+        if(NotificationMoniter.isWhiteApp(notification.getPackageName())) {
+            return false;
+        }
 
         return true;
+    }
+
+    private boolean getNotifySpSwitch() {
+        ContentResolver resolver = SecurityApplication.getInstance().getContentResolver();
+        Cursor cursor = resolver.query(ASpProvider.Content_URL,null,GlobalPref.SECURITY_KEY_SWITCH_NOTIFY,null,null,null);
+        if (cursor == null) {
+            return false;
+        } else {
+            cursor.moveToFirst();
+            String result = cursor.getString(cursor.getColumnIndex("value"));
+            return Boolean.parseBoolean(result);
+        }
     }
 }

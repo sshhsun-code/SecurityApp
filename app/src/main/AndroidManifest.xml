@@ -153,5 +153,13 @@
             android:exported="true"
             android:process=":backup">
         </provider>
+
+        <provider
+            android:authorities="com.sunqi.provider"
+            android:permission="com.example.sunqi.securityking.getconfig"
+            android:name=".dataprovider.ASpProvider"
+            android:exported="true"
+            android:process=":backup">
+        </provider>
     </application>
 </manifest>
