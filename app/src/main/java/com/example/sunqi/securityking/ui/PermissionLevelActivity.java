@@ -25,6 +25,7 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
     private RelativeLayout rank_protect_monitor_card;
     private RelativeLayout rank_protect_antiharass_card;
     private RelativeLayout rank_protect_applock_card;
+    private RelativeLayout rank_protect_main_title_layout;
     private TextView permission_level_main_title;
 
     private ImageView level_applock_card_switch_ok;
@@ -34,6 +35,7 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
     private TextView  level_applock_card_switch_not_ok;
     private TextView  levle_antiharass_card_switch_not_ok;
     private TextView  levle_protect_back;
+    private TextView  rank_protect_sub_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +48,13 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
 
     private void initView() {
         rank_protect_main_button = (TextView) findViewById(R.id.rank_protect_main_button);
+        rank_protect_sub_title = (TextView) findViewById(R.id.rank_protect_sub_title);
         rank_protect_main_button.setOnClickListener(this);
         rank_protect_main_button.setVisibility(View.GONE);
         rank_protect_monitor_card = (RelativeLayout) findViewById(R.id.rank_protect_monitor_card);
         rank_protect_antiharass_card = (RelativeLayout) findViewById(R.id.rank_protect_antiharass_card);
         rank_protect_applock_card = (RelativeLayout) findViewById(R.id.rank_protect_applock_card);
+        rank_protect_main_title_layout = (RelativeLayout) findViewById(R.id.rank_protect_main_title_layout);
         permission_level_main_title = (TextView) findViewById(R.id.permission_level_main_title);
         level_applock_card_switch_ok = (ImageView) findViewById(R.id.level_applock_card_switch_ok);
         levle_antiharass_card_switch_ok = (ImageView) findViewById(R.id.levle_antiharass_card_switch_ok);
@@ -79,20 +83,23 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
 
     private void refreshBackGround() {
         findViewById(R.id.level_text_layout).setBackgroundResource(getBgColorId());
+        findViewById(R.id.rank_protect_main_title_layout).setBackgroundResource(getBgColorId());
     }
 
 
 
     private int getBgColorId() {
-        return R.color.notification_background_color_blue;
-//        Constant.ProtectLevel level = PermissionManager.getLevel();
-//        if (level == Constant.ProtectLevel.HIGH) {
-//            return R.color.cn_rank_protect_bg_blue;
-//        } else if (level == Constant.ProtectLevel.MID) {
-//            return R.color.cn_rank_protect_bg_yellow;
-//        } else {
-//            return R.color.cn_rank_protect_bg_red;
-//        }
+        Constant.Level level = PermissionManager.getLevel();
+        if (level == Constant.Level.HIGH) {
+            permission_level_main_title.setText("极高");
+            return R.color.notification_background_color_blue;
+        } else if (level == Constant.Level.MID) {
+            permission_level_main_title.setText("待提升");
+            return R.color.cn_payment_bg_orange;
+        } else {
+            permission_level_main_title.setText("极低");
+            return R.color.cn_payment_bg_orange;
+        }
     }
 
 
@@ -116,10 +123,13 @@ public class PermissionLevelActivity extends Activity implements View.OnClickLis
         Constant.Level level = PermissionManager.getLevel();
         if (level == Constant.Level.HIGH) {
             permission_level_main_title.setText("极高");
+            rank_protect_sub_title.setVisibility(View.GONE);
         } else if (level == Constant.Level.MID) {
             permission_level_main_title.setText("待提升");
+            rank_protect_sub_title.setVisibility(View.VISIBLE);
         } else {
             permission_level_main_title.setText("极低");
+            rank_protect_sub_title.setVisibility(View.VISIBLE);
         }
     }
 

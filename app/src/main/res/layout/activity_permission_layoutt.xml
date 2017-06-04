@@ -189,7 +189,7 @@
         android:layout_height="214dp"
         android:background="@color/notification_background_color_blue">
 
-    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/levle_protect_back"
@@ -205,6 +205,7 @@
         android:text="@string/cn_rank_protect_title"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/level_text_layout"

@@ -25,11 +25,11 @@
 
     <string name="cn_rank_protect_monitor_card_text1">高级安全防护权限</string>
     <string name="cn_rank_protect_monitor_card_text2">&lt;font color=#878787&gt;实时监控&lt;/font&gt;&lt;font color=#f20000&gt;病毒风险&lt;/font&gt;&lt;font color=#878787&gt;及&lt;/font&gt;&lt;font color=#f20000&gt;系统漏洞&lt;/font&gt;</string>
-    <string name="cn_rank_protect_monitor_card_text3">确保病毒监控等功能稳定运行</string>
+    <string name="cn_rank_protect_monitor_card_text3">确保防通知打扰等功能稳定运行</string>
     <string name="cn_rank_protect_antiharass_card_text1">骚扰信息拦截权限</string>
-    <string name="cn_rank_protect_antiharass_card_text2">协助实时拦截骚扰电话和短信</string>
+    <string name="cn_rank_protect_antiharass_card_text2">协助实时拦截骚扰通知</string>
     <string name="cn_rank_protect_applock_card_text1">应用隐私保护权限</string>
-    <string name="cn_rank_protect_applock_card_text2">阻止其他应用获取个人隐私</string>
+    <string name="cn_rank_protect_applock_card_text2">检测并提醒其他查看用户隐私的应用</string>
     <string name="cn_rank_protect_small_btn_open">开启</string>
     <string name="cn_rank_protect_small_btn_unopen">未开启</string>
     <string name="cn_rank_protect_bit_btn_one_key_open">一键开启</string>
